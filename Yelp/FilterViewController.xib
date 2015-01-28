@@ -5,9 +5,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterViewController">
             <connections>
-                <outlet property="tableView" destination="J9x-GS-nvH" id="D3A-jN-e9c"/>
+                <outlet property="tableView" destination="eAa-cf-VNr" id="pGi-FL-rHm"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,12 +16,19 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J9x-GS-nvH">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eAa-cf-VNr">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="eAa-cf-VNr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Yp-9L-qUA"/>
+                <constraint firstAttribute="trailing" secondItem="eAa-cf-VNr" secondAttribute="trailing" id="9em-ag-1LI"/>
+                <constraint firstItem="eAa-cf-VNr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AZ0-oH-FOb"/>
+                <constraint firstAttribute="bottom" secondItem="eAa-cf-VNr" secondAttribute="bottom" id="Jg9-70-Hvr"/>
+            </constraints>
+            <point key="canvasLocation" x="340" y="353"/>
         </view>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
