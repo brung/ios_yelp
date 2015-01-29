@@ -18,16 +18,20 @@
         business.categories = businessDict[@"categories"];
         business.display_phone = businessDict[@"display_phone"];
         business.distance = [businessDict[@"distance"] floatValue];
-        business.image_url = businessDict[@"image_url"];
+        if (businessDict[@"image_url"] != nil) {
+            business.image_url = [NSURL URLWithString:businessDict[@"image_url"]];
+        }
         business.is_claimed = [businessDict[@"is_claimed"] boolValue];
         business.is_closed = [businessDict[@"is_closed"] boolValue];
         business.address = [businessDict valueForKeyPath:@"location.address"];
         business.city = [businessDict valueForKey:@"location.city"];
         business.coordinate = [businessDict valueForKey:@"location.coordinate"];
+        business.mobile_url = businessDict[@"mobile_url"];
         business.rating = [businessDict[@"distance"] floatValue];
-        business.rating_img_url = businessDict[@"rating_img_url"];
-        business.rating_img_url_large = businessDict[@"rating_img_url_large"];
-        business.rating_img_url_small = businessDict[@"rating_img_url_small"];
+        business.rating_img_url = [NSURL URLWithString:businessDict[@"rating_img_url"]];
+        business.rating_img_url_large = [NSURL URLWithString:businessDict[@"rating_img_url_large"]];
+        business.rating_img_url_small = [NSURL URLWithString:businessDict[@"rating_img_url_small"]];
+        business.review_count = [businessDict[@"review_count"] integerValue];
         business.url = businessDict[@"url"];
         [businesses addObject:business];
         
