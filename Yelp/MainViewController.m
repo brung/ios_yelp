@@ -18,12 +18,14 @@ NSString * const kYelpConsumerSecret = @"uw3QzsyZAzcRYfMNensCcn8Vb0M";
 NSString * const kYelpToken = @"DHP8ygCpJVrgYz6M2tzIilJbKNQYWJex";
 NSString * const kYelpTokenSecret = @"Gaj-qGTtbkhpoJRUbjHQm6RTFoA";
 static NSString *BusinessCellIdentifier = @"BusinessCell";
+static NSString *DefaultSearch = @"Restaurants";
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
 @property (nonatomic, strong) BusinessCell *prototypeCell;
+@property (nonatomic, strong) NSDictionary *filters;
 
 - (void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params;
 
@@ -43,7 +45,19 @@ static NSString *BusinessCellIdentifier = @"BusinessCell";
     if (self) {
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        [self fetchBusinessesWithQuery:@"Restaurants" params:nil];
+        [self fetchBusinessesWithQuery:DefaultSearch params:nil];
+        self.title = @"Yelp";
+        
+        UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
+        filterButton.tintColor = [UIColor whiteColor];
+        filterButton.style = UIBarButtonItemStyleBordered;
+        self.navigationItem.leftBarButtonItem = filterButton;
+        
+        float leftButtonWidth = CGRectGetWidth(self.navigationItem.titleView.frame);
+        UISearchBar *sb = [[UISearchBar alloc] initWithFrame:CGRectMake(leftButtonWidth, 0, CGRectGetWidth(self.navigationItem.titleView.frame)-leftButtonWidth, CGRectGetHeight(self.navigationItem.titleView.frame))];
+        sb.delegate = self;
+        self.navigationItem.titleView = sb;
+        
     }
     return self;
 }
@@ -52,9 +66,6 @@ static NSString *BusinessCellIdentifier = @"BusinessCell";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"Yelp";
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -68,10 +79,18 @@ static NSString *BusinessCellIdentifier = @"BusinessCell";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - SearchBar delegate methods
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if ([searchText length] == 0) {
+        searchText = DefaultSearch;
+    }
+    [self fetchBusinessesWithQuery:searchText params:self.filters];
+}
+
 #pragma mark - Filter delegate methods
 - (void)filtersViewController:(FilterViewController *)filtersViewControlller didChangeFilters:(NSDictionary *)filters {
-    [self fetchBusinessesWithQuery:@"Restaurants" params:filters];
-
+    self.filters = filters;
+    [self fetchBusinessesWithQuery:DefaultSearch params:filters];
     NSLog(@"hit apply button %@", filters);
     
 }
@@ -93,7 +112,6 @@ static NSString *BusinessCellIdentifier = @"BusinessCell";
     [self.prototypeCell layoutIfNeeded];
     
     CGSize size = [self.prototypeCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    NSLog(@"%f height", size.height);
     return size.height+1;
 }
 
@@ -105,29 +123,9 @@ static NSString *BusinessCellIdentifier = @"BusinessCell";
 - (void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell isKindOfClass:[BusinessCell class]]) {
-        NSLog(@"configuring cell at %ld", (long)indexPath.row);
         BusinessCell *businessCell = (BusinessCell *)cell;
-        Business *business = self.businesses[indexPath.row];
-        businessCell.nameLabel.text = business.name;
-        [businessCell.logoImage setImageWithURL:business.image_url];
-        [businessCell.ratingImage setImageWithURL:business.rating_img_url];
-        businessCell.reviewCountLabel.text = [NSString stringWithFormat:@"%ld Reviews", business.review_count];
-        businessCell.distanceLabel.text = [NSString stringWithFormat:@"%0.1f mi", business.distance/5280];
-    
-        NSMutableArray *addressArray =  [NSMutableArray arrayWithArray:business.address];
-    //    if (business.neighborhoods.count == 0) {
-    //        [addressArray addObject:business.city];
-    //    } else {
-    //        [addressArray addObjectsFromArray:business.neighborhoods];
-    //    }
-        businessCell.addressLabel.text = [addressArray componentsJoinedByString:@","];
-    
-        NSMutableArray *catArray = [NSMutableArray array];
-        for (NSArray *category in business.categories) {
-            [catArray addObject:category[0]];
-        }
-        NSString *categoryString = [catArray componentsJoinedByString:@","];
-        businessCell.categoriesLabel.text = categoryString;
+        businessCell.business = self.businesses[indexPath.row];
+        //businessCell.nameLabel.text = [NSString stringWithFormat:@"%ld. %@", indexPath.row+1, business.name];
     }
 }
 

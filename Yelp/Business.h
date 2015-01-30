@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Business : NSObject
-
-+(NSArray *) businessesWithDictionaries:(NSArray *)businessDictionaries;
++ (NSArray *)businessesWithDictionaries:(NSArray *)businessDictionaries;
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSArray* categories;

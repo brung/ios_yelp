@@ -10,35 +10,43 @@
 
 @implementation Business
 
+- (id)initWithDictionary:(NSDictionary *) businessDict {
+    self = [super init];
+    if (self) {
+        self.name = businessDict[@"name"];
+        self.categories = businessDict[@"categories"];
+        self.display_phone = businessDict[@"display_phone"];
+        self.distance = [businessDict[@"distance"] floatValue];
+        if (businessDict[@"image_url"] != nil) {
+            self.image_url = [NSURL URLWithString:businessDict[@"image_url"]];
+        }
+        self.is_claimed = [businessDict[@"is_claimed"] boolValue];
+        self.is_closed = [businessDict[@"is_closed"] boolValue];
+        self.address = [businessDict valueForKeyPath:@"location.address"];
+        self.city = [businessDict valueForKeyPath:@"location.city"];
+        self.coordinate = [businessDict valueForKeyPath:@"location.coordinate"];
+        self.neighborhoods = [businessDict valueForKeyPath:@"location.neighborhoods"];
+        self.mobile_url = businessDict[@"mobile_url"];
+        self.rating = [businessDict[@"distance"] floatValue];
+        self.rating_img_url = [NSURL URLWithString:businessDict[@"rating_img_url"]];
+        self.rating_img_url_large = [NSURL URLWithString:businessDict[@"rating_img_url_large"]];
+        self.rating_img_url_small = [NSURL URLWithString:businessDict[@"rating_img_url_small"]];
+        self.review_count = [businessDict[@"review_count"] integerValue];
+        self.url = businessDict[@"url"];
+
+    }
+    return self;
+}
+
 + (NSArray *) businessesWithDictionaries:(NSArray *)businessDictionaries {
     NSMutableArray *businesses = [NSMutableArray array];
     for (NSDictionary *businessDict in businessDictionaries) {
-        Business *business = [[Business alloc] init];
-        business.name = businessDict[@"name"];
-        business.categories = businessDict[@"categories"];
-        business.display_phone = businessDict[@"display_phone"];
-        business.distance = [businessDict[@"distance"] floatValue];
-        if (businessDict[@"image_url"] != nil) {
-            business.image_url = [NSURL URLWithString:businessDict[@"image_url"]];
-        }
-        business.is_claimed = [businessDict[@"is_claimed"] boolValue];
-        business.is_closed = [businessDict[@"is_closed"] boolValue];
-        business.address = [businessDict valueForKeyPath:@"location.address"];
-        business.city = [businessDict valueForKey:@"location.city"];
-        business.coordinate = [businessDict valueForKey:@"location.coordinate"];
-        business.mobile_url = businessDict[@"mobile_url"];
-        business.rating = [businessDict[@"distance"] floatValue];
-        business.rating_img_url = [NSURL URLWithString:businessDict[@"rating_img_url"]];
-        business.rating_img_url_large = [NSURL URLWithString:businessDict[@"rating_img_url_large"]];
-        business.rating_img_url_small = [NSURL URLWithString:businessDict[@"rating_img_url_small"]];
-        business.review_count = [businessDict[@"review_count"] integerValue];
-        business.url = businessDict[@"url"];
+        Business *business = [[Business alloc] initWithDictionary:businessDict];
         [businesses addObject:business];
         
     }
     
-    NSArray *returnBusinesses = [businesses copy];
-    return returnBusinesses;
+    return businesses;
 }
 
 @end

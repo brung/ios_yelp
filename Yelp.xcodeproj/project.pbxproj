@@ -123,12 +123,7 @@
 				B8B273B01A78956200DA9EBD /* FilterViewController.h */,
 				B8B273B11A78956200DA9EBD /* FilterViewController.m */,
 				B8B273B21A78956200DA9EBD /* FilterViewController.xib */,
-				B8B273BA1A7895EC00DA9EBD /* SwitchCell.h */,
-				B8B273BB1A7895EC00DA9EBD /* SwitchCell.m */,
-				B8B273BC1A7895EC00DA9EBD /* SwitchCell.xib */,
-				B8B273C81A794E9900DA9EBD /* BusinessCell.h */,
-				B8B273C91A794E9900DA9EBD /* BusinessCell.m */,
-				B8B273CA1A794E9900DA9EBD /* BusinessCell.xib */,
+				B82AA5B61A7B5FA3009A7E5C /* Views */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -206,6 +201,19 @@
 				42FD6C6C18DC286B000BF2B9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B82AA5B61A7B5FA3009A7E5C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B8B273C81A794E9900DA9EBD /* BusinessCell.h */,
+				B8B273C91A794E9900DA9EBD /* BusinessCell.m */,
+				B8B273CA1A794E9900DA9EBD /* BusinessCell.xib */,
+				B8B273BA1A7895EC00DA9EBD /* SwitchCell.h */,
+				B8B273BB1A7895EC00DA9EBD /* SwitchCell.m */,
+				B8B273BC1A7895EC00DA9EBD /* SwitchCell.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		B8B273C41A79466B00DA9EBD /* Models */ = {
