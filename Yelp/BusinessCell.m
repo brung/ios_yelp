@@ -13,7 +13,6 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.nameLabel.preferredMaxLayoutWidth = self.nameLabel.frame.size.width;
     self.logoImage.layer.cornerRadius = 3;
     self.logoImage.clipsToBounds = YES;
 }
@@ -26,7 +25,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.nameLabel.preferredMaxLayoutWidth = self.nameLabel.frame.size.width;
     self.logoImage.layer.cornerRadius = 3;
 }
 
@@ -64,7 +62,7 @@
 }
 
 - (NSString *)getDisplayReviewCount {
-    return [NSString stringWithFormat:@"%ld Reviews", self.business.review_count];
+    return [NSString stringWithFormat:@"%ld Reviews", (long)self.business.review_count];
 }
 
 @end

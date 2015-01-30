@@ -17,15 +17,20 @@ NSString * const kYelpConsumerKey = @"fgQ4OCxPj2MPVBMMMBuG7Q";
 NSString * const kYelpConsumerSecret = @"uw3QzsyZAzcRYfMNensCcn8Vb0M";
 NSString * const kYelpToken = @"DHP8ygCpJVrgYz6M2tzIilJbKNQYWJex";
 NSString * const kYelpTokenSecret = @"Gaj-qGTtbkhpoJRUbjHQm6RTFoA";
-static NSString *BusinessCellIdentifier = @"BusinessCell";
-static NSString *DefaultSearch = @"Restaurants";
+static NSString * const BusinessCellIdentifier = @"BusinessCell";
+static NSString * const DefaultSearch = @"Restaurants";
+static NSInteger const ResultCount = 20;
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate, UISearchBarDelegate>
+@property (nonatomic, strong) BusinessCell *prototypeCell;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
-@property (nonatomic, strong) BusinessCell *prototypeCell;
 @property (nonatomic, strong) NSDictionary *filters;
+@property (nonatomic, strong) NSString *currentSearch;
+@property (nonatomic) BOOL isUpdating;
+@property (nonatomic) BOOL isPaginating;
+@property (nonatomic) NSInteger pagination;
 
 - (void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params;
 
@@ -43,9 +48,15 @@ static NSString *DefaultSearch = @"Restaurants";
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.isUpdating = NO;
+        self.isPaginating = NO;
+        self.pagination = 0;
+        self.currentSearch = DefaultSearch;
+        self.filters = [NSDictionary dictionary];
+        
         // You can register for Yelp API keys here: http://www.yelp.com/developers/manage_api_keys
         self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey consumerSecret:kYelpConsumerSecret accessToken:kYelpToken accessSecret:kYelpTokenSecret];
-        [self fetchBusinessesWithQuery:DefaultSearch params:nil];
+        [self fetchDataForNewSearch];
         self.title = @"Yelp";
         
         UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
@@ -66,11 +77,15 @@ static NSString *DefaultSearch = @"Restaurants";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:BusinessCellIdentifier bundle:nil] forCellReuseIdentifier:BusinessCellIdentifier];
-    
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 50)];
+    UIActivityIndicatorView *loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [loadingView startAnimating];
+    loadingView.center = tableFooterView.center;
+    [tableFooterView addSubview:loadingView];
+    self.tableView.tableFooterView = tableFooterView;
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,16 +96,14 @@ static NSString *DefaultSearch = @"Restaurants";
 
 #pragma mark - SearchBar delegate methods
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if ([searchText length] == 0) {
-        searchText = DefaultSearch;
-    }
-    [self fetchBusinessesWithQuery:searchText params:self.filters];
+    self.currentSearch = ([searchText length] == 0) ? DefaultSearch : searchText;
+    [self fetchDataForNewSearch];
 }
 
 #pragma mark - Filter delegate methods
 - (void)filtersViewController:(FilterViewController *)filtersViewControlller didChangeFilters:(NSDictionary *)filters {
     self.filters = filters;
-    [self fetchBusinessesWithQuery:DefaultSearch params:filters];
+    [self fetchDataForNewSearch];
     NSLog(@"hit apply button %@", filters);
     
 }
@@ -101,13 +114,15 @@ static NSString *DefaultSearch = @"Restaurants";
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.businesses.count -1) {
+        [self fetchDataForNewPage];
+    }
     BusinessCell *cell = [tableView dequeueReusableCellWithIdentifier:BusinessCellIdentifier];
     [self configureCell:cell forRowAtIndexPath:indexPath];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //return 120;
     [self configureCell:self.prototypeCell forRowAtIndexPath:indexPath];
     [self.prototypeCell layoutIfNeeded];
     
@@ -137,13 +152,44 @@ static NSString *DefaultSearch = @"Restaurants";
     [self presentViewController:nvc animated:YES completion:nil];
 }
 
+- (void)fetchDataForNewPage {
+    if (!self.isUpdating) {
+        self.isUpdating = YES;
+        self.isPaginating = YES;
+        self.pagination += 1;
+        NSMutableDictionary *dict = [self.filters mutableCopy];
+        NSInteger offset = self.pagination * ResultCount;
+        [dict setObject:@(offset) forKey:@"offset"];
+        [self fetchBusinessesWithQuery:self.currentSearch params:dict];
+    }
+}
+
+- (void)fetchDataForNewSearch {
+    if (!self.isUpdating) {
+        self.isUpdating = YES;
+        self.isPaginating = NO;
+        self.pagination = 0;
+        [self fetchBusinessesWithQuery:self.currentSearch params:self.filters];
+    }
+}
+
 - (void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params {
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
         NSArray *businessDictionaries = response[@"businesses"];
-        self.businesses = [Business businessesWithDictionaries:businessDictionaries] ;
+        if (self.isPaginating) {
+            self.isPaginating = NO;
+            NSMutableArray *dict = [self.businesses mutableCopy];
+            [dict addObjectsFromArray:[Business businessesWithDictionaries:businessDictionaries]];
+            self.businesses = dict;
+        } else {
+            self.businesses = [Business businessesWithDictionaries:businessDictionaries];
+        }
         [self.tableView reloadData];
-        NSLog(@"response: %@", response);
+        self.isUpdating = NO;
+        //NSLog(@"response: %@", response);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        self.isPaginating = NO;
+        self.isUpdating = NO;
         NSLog(@"error: %@", [error description]);
     }];
 }

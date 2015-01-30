@@ -3,14 +3,14 @@ CodePath iOS Intro Class - Week 2 - Yelp
 
 Build a Yelp search app
 
-Time Spent: 6.5 hours
+Time Spent: 8 hours
 
 Completed user stories:
  * Search Results Page:
    * [x] Required: Table rows should be dynamic height according to the content height
    * [x] Required: Custom cells should have the proper Auto Layout constraints
    * [x] Required: Search bar should be in the navigation bar (doesn't have to expand to show location like the real Yelp app does). Hint: This is just a UISearchBar that is set as the navigationItem.titleView
-   * [ ] Optional: infinite scroll for restaurant results
+   * [x] Optional: infinite scroll for restaurant results
    * [ ] Optional: Implement map view of restaurant results
  * Filter Page:
    * [ ] Required: The filters you should actually have are: category, sort (best match, distance, highest rated), radius (meters), deals (on/off).
