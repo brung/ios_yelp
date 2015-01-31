@@ -23,6 +23,9 @@
 		42FD6C6E18DC286B000BF2B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42FD6C6C18DC286B000BF2B9 /* InfoPlist.strings */; };
 		42FD6C7018DC286B000BF2B9 /* YelpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FD6C6F18DC286B000BF2B9 /* YelpTests.m */; };
 		63E591F41F684901AF8C1C19 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DEC6D18C14F46F8AF2EA320 /* libPods.a */; };
+		B82069961A7BE44E00AAE037 /* DropDownMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B82069941A7BE44E00AAE037 /* DropDownMenuCell.m */; };
+		B82069971A7BE44E00AAE037 /* DropDownMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B82069951A7BE44E00AAE037 /* DropDownMenuCell.xib */; };
+		B820699A1A7C79E700AAE037 /* Filters.m in Sources */ = {isa = PBXBuildFile; fileRef = B82069991A7C79E700AAE037 /* Filters.m */; };
 		B8B273B31A78956200DA9EBD /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273B11A78956200DA9EBD /* FilterViewController.m */; };
 		B8B273B41A78956200DA9EBD /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B273B21A78956200DA9EBD /* FilterViewController.xib */; };
 		B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273BB1A7895EC00DA9EBD /* SwitchCell.m */; };
@@ -66,6 +69,11 @@
 		42FD6C6D18DC286B000BF2B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		42FD6C6F18DC286B000BF2B9 /* YelpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YelpTests.m; sourceTree = "<group>"; };
 		9DEC6D18C14F46F8AF2EA320 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B82069931A7BE44E00AAE037 /* DropDownMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownMenuCell.h; sourceTree = "<group>"; };
+		B82069941A7BE44E00AAE037 /* DropDownMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropDownMenuCell.m; sourceTree = "<group>"; };
+		B82069951A7BE44E00AAE037 /* DropDownMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownMenuCell.xib; sourceTree = "<group>"; };
+		B82069981A7C79E700AAE037 /* Filters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filters.h; sourceTree = "<group>"; };
+		B82069991A7C79E700AAE037 /* Filters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filters.m; sourceTree = "<group>"; };
 		B8B273B01A78956200DA9EBD /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		B8B273B11A78956200DA9EBD /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		B8B273B21A78956200DA9EBD /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
@@ -212,6 +220,9 @@
 				B8B273BA1A7895EC00DA9EBD /* SwitchCell.h */,
 				B8B273BB1A7895EC00DA9EBD /* SwitchCell.m */,
 				B8B273BC1A7895EC00DA9EBD /* SwitchCell.xib */,
+				B82069931A7BE44E00AAE037 /* DropDownMenuCell.h */,
+				B82069941A7BE44E00AAE037 /* DropDownMenuCell.m */,
+				B82069951A7BE44E00AAE037 /* DropDownMenuCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -221,6 +232,8 @@
 			children = (
 				B8B273C51A79469400DA9EBD /* Business.h */,
 				B8B273C61A79469400DA9EBD /* Business.m */,
+				B82069981A7C79E700AAE037 /* Filters.h */,
+				B82069991A7C79E700AAE037 /* Filters.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -316,6 +329,7 @@
 				B8B273B41A78956200DA9EBD /* FilterViewController.xib in Resources */,
 				42FD6C5D18DC286B000BF2B9 /* Images.xcassets in Resources */,
 				B8B273BE1A7895EC00DA9EBD /* SwitchCell.xib in Resources */,
+				B82069971A7BE44E00AAE037 /* DropDownMenuCell.xib in Resources */,
 				B8B273CC1A794E9900DA9EBD /* BusinessCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,7 +385,9 @@
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
 				B8B273C71A79469400DA9EBD /* Business.m in Sources */,
 				B8B273CB1A794E9900DA9EBD /* BusinessCell.m in Sources */,
+				B820699A1A7C79E700AAE037 /* Filters.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
+				B82069961A7BE44E00AAE037 /* DropDownMenuCell.m in Sources */,
 				B8B273B31A78956200DA9EBD /* FilterViewController.m in Sources */,
 				B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
