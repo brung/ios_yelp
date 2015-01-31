@@ -7,15 +7,19 @@
 //
 
 #import "FilterViewController.h"
-#import "SwitchCell.h"
+#import "RestaurantCategory.h"
+#import "RestaurantCategoryCell.h"
 
-@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate>
+
+static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell";
+
+
+@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, RestaurantCategoryCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, readonly) NSDictionary *filters;
 @property (nonatomic, strong) NSArray *categories;
 @property (nonatomic, strong) NSMutableSet *selectedCategories;
 
-- (void) initCategories;
 @end
 
 @implementation FilterViewController
@@ -25,7 +29,7 @@
     
     if (self) {
         self.selectedCategories = [NSMutableSet set];
-        [self initCategories];
+        self.categories = [RestaurantCategory getRestaurantCategories];
     }
     
     return self;
@@ -39,7 +43,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.tableView registerNib:[UINib nibWithNibName:@"SwitchCell" bundle:nil] forCellReuseIdentifier:@"SwitchCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:RestaurantCategoryCellNibName bundle:nil] forCellReuseIdentifier:RestaurantCategoryCellNibName];
 
 }
 
@@ -53,16 +57,23 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *category = self.categories[indexPath.row];
-    SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchCell"];
-    cell.toggleLabel.text = category[@"name"];
-    cell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
-    cell.delegate = self;
+    RestaurantCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:RestaurantCategoryCellNibName];
+    [self configureCell:cell forRowAtIndexPath:indexPath];
     return cell;
 }
 
+- (void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell isKindOfClass:[RestaurantCategoryCell class]]) {
+        RestaurantCategoryCell *rcCell = (RestaurantCategoryCell *)cell;
+        rcCell.restaurantCategory = self.categories[indexPath.row];
+        rcCell.delegate = self;
+        rcCell.on = [self.selectedCategories containsObject:self.categories[indexPath.row]];
+    }
+}
+
 #pragma mark - SwitchCell Delegate Methods
-- (void)switchCell:(SwitchCell *)cell didChangeValue:(BOOL)value {
+- (void)restaurantCategoryCell:(RestaurantCategoryCell *)cell didChangeValue:(BOOL)value {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if (value) {
         [self.selectedCategories addObject:self.categories[indexPath.row]];
@@ -75,14 +86,16 @@
 
 - (NSDictionary *) filters {
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+    NSLog(@"Setting filters");
     if (self.selectedCategories.count > 0) {
         NSMutableArray *names = [NSMutableArray array];
-        for (NSDictionary *category in self.selectedCategories) {
-            [names addObject:category[@"code"]];
+        for (RestaurantCategory *category in self.selectedCategories) {
+            [names addObject:category.code];
         }
         NSString *categoryFilter = [names componentsJoinedByString:@","];
         [filters setObject:categoryFilter forKey:@"category_filter"];
     }
+    NSLog(@"created filters %@", filters);
     return filters;
 }
 
@@ -95,10 +108,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)initCategories {
-    self.categories = @[@{@"name" : @"Turkish", @"code" : @"turkish"},
-                        @{@"name" : @"Ukranian", @"code" : @"ukranian"}];
-}
 
 /*
 #pragma mark - Navigation
