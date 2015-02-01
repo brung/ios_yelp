@@ -10,6 +10,8 @@
 #import "FilterHeaderView.h"
 #import "DropDownMenuCell.h"
 #import "MostPopularFilter.h"
+#import "DistanceFilter.h"
+#import "SortyByFilter.h"
 #import "SwitchCell.h"
 #import "RestaurantCategory.h"
 #import "RestaurantCategoryCell.h"
@@ -33,6 +35,14 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 @property (nonatomic, strong) NSArray *mostPopular;
 @property (nonatomic, strong) NSMutableSet *selectedPopularFilters;
 
+// Distance Filters
+@property (nonatomic, strong) NSArray *distanceOptions;
+@property (nonatomic) NSInteger selectedDistance;
+
+// Sort Filters
+@property (nonatomic, strong) NSArray *sortByOptions;
+@property (nonatomic) NSInteger selectedSortBy;
+
 // Restaurant categories
 @property (nonatomic, strong) NSArray *categories;
 @property (nonatomic, strong) NSMutableSet *selectedCategories;
@@ -51,9 +61,13 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         self.selectedCategories = [NSMutableSet set];
         self.sectionExpanded = [NSMutableSet set];
         self.mostPopular = [MostPopularFilter getMostPopularFilters];
+        self.distanceOptions = [DistanceFilter getFilterOptions];
+        self.sortByOptions = [SortyByFilter getFilterOptions];
         self.categories = [RestaurantCategory getRestaurantCategories];
         
         self.tableViewFilters = @[@{@"title" : @"Most Popular", @"type" : @(FILTER_TYPE_TOGGLES), @"data" : self.mostPopular},
+                                  @{@"title" : @"Distance", @"type" : @(FILTER_TYPE_SELECT_ONE), @"data" : self.distanceOptions},
+                                  @{@"title" : @"Sort by", @"type" : @(FILTER_TYPE_SELECT_ONE), @"data" : self.sortByOptions},
                                   @{@"title" : @"Restaurant Categories", @"type" : @(FILTER_TYPE_SELECT_MANY), @"data" : self.categories}];
     }
     
@@ -71,7 +85,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     [self.tableView registerNib:[UINib nibWithNibName:RestaurantCategoryCellNibName bundle:nil] forCellReuseIdentifier:RestaurantCategoryCellNibName];
     [self.tableView registerNib:[UINib nibWithNibName:SwitchCellNibName bundle:nil] forCellReuseIdentifier:SwitchCellNibName];
     [self.tableView registerNib:[UINib nibWithNibName:DropDownMenuCellNibName bundle:nil] forCellReuseIdentifier:DropDownMenuCellNibName];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,6 +127,22 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         cell.delegate = self;
         cell.on = [self.selectedPopularFilters containsObject:data];
         return cell;
+    } else if ([sectionDict[@"title"] isEqualToString:@"Distance"]) {
+        DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
+        NSArray *sectionData = sectionDict[@"data"];
+        DistanceFilter *data = sectionData[indexPath.row];
+        cell.dropDownLabel.text = data.name;
+        NSString *iconString = (self.selectedDistance == indexPath.row) ? @"Checkbox_selected" : @"Checkbox";
+        [cell.selectionIcon setImage:[UIImage imageNamed:iconString]];
+        return cell;
+    } else if ([sectionDict[@"title"] isEqualToString:@"Sort by"]) {
+        DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
+        NSArray *sectionData = sectionDict[@"data"];
+        SortyByFilter *data = sectionData[indexPath.row];
+        cell.dropDownLabel.text = data.name;
+        NSString *iconString = (self.selectedSortBy == indexPath.row) ? @"Checkbox_selected" : @"Checkbox";
+        [cell.selectionIcon setImage:[UIImage imageNamed:iconString]];
+        return cell;
     } else {
         DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
         cell.dropDownLabel.text = @"";
@@ -132,7 +162,18 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSDictionary *sectionInfo = self.tableViewFilters[indexPath.section];
+    if ([sectionInfo[@"title"] isEqualToString:@"Distance"]) {
+        if (indexPath.row != self.selectedDistance) {
+            self.selectedDistance = indexPath.row;
+            [self.tableView reloadData];
+        }
+    } else if ([sectionInfo[@"title"] isEqualToString:@"Sort by"]) {
+        if (indexPath.row != self.selectedSortBy) {
+            self.selectedSortBy = indexPath.row;
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark - SwitchCell Delegate Methods
@@ -175,6 +216,17 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
             [filters setObject:@(YES) forKey:mpf.apiKey];
         }
     }
+    
+    if (self.selectedDistance > 0) {
+        DistanceFilter *distanceFilter = self.distanceOptions[self.selectedDistance];
+        [filters setObject:distanceFilter.code forKey:@"radius_filter"];
+    }
+    
+    if (self.selectedSortBy > 0) {
+        SortyByFilter *sortByFilter = self.sortByOptions[self.selectedSortBy];
+        [filters setObject:sortByFilter.code forKey:@"sort"];
+    }
+    
     NSLog(@"created filters %@", filters);
     return filters;
 }
@@ -190,13 +242,13 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

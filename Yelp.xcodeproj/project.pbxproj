@@ -30,6 +30,8 @@
 		B8A0B4BF1A7D8115008BB902 /* RestaurantCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */; };
 		B8A0B4C21A7D8E85008BB902 /* FilterHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */; };
 		B8A0B4C51A7D9877008BB902 /* MostPopularFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */; };
+		B8A0B4CB1A7DA543008BB902 /* SortyByFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4CA1A7DA543008BB902 /* SortyByFilter.m */; };
+		B8A0B4CE1A7DA551008BB902 /* DistanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4CD1A7DA551008BB902 /* DistanceFilter.m */; };
 		B8B273B31A78956200DA9EBD /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273B11A78956200DA9EBD /* FilterViewController.m */; };
 		B8B273B41A78956200DA9EBD /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B273B21A78956200DA9EBD /* FilterViewController.xib */; };
 		B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273BB1A7895EC00DA9EBD /* SwitchCell.m */; };
@@ -85,6 +87,10 @@
 		B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterHeaderView.m; sourceTree = "<group>"; };
 		B8A0B4C31A7D9877008BB902 /* MostPopularFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostPopularFilter.h; sourceTree = "<group>"; };
 		B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MostPopularFilter.m; sourceTree = "<group>"; };
+		B8A0B4C91A7DA543008BB902 /* SortyByFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortyByFilter.h; sourceTree = "<group>"; };
+		B8A0B4CA1A7DA543008BB902 /* SortyByFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortyByFilter.m; sourceTree = "<group>"; };
+		B8A0B4CC1A7DA551008BB902 /* DistanceFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistanceFilter.h; sourceTree = "<group>"; };
+		B8A0B4CD1A7DA551008BB902 /* DistanceFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistanceFilter.m; sourceTree = "<group>"; };
 		B8B273B01A78956200DA9EBD /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		B8B273B11A78956200DA9EBD /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		B8B273B21A78956200DA9EBD /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
@@ -252,6 +258,10 @@
 				B8A0B4B41A7CC234008BB902 /* RestaurantCategory.m */,
 				B8A0B4C31A7D9877008BB902 /* MostPopularFilter.h */,
 				B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */,
+				B8A0B4C91A7DA543008BB902 /* SortyByFilter.h */,
+				B8A0B4CA1A7DA543008BB902 /* SortyByFilter.m */,
+				B8A0B4CC1A7DA551008BB902 /* DistanceFilter.h */,
+				B8A0B4CD1A7DA551008BB902 /* DistanceFilter.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -402,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42FD6C5B18DC286B000BF2B9 /* AppDelegate.m in Sources */,
+				B8A0B4CB1A7DA543008BB902 /* SortyByFilter.m in Sources */,
 				B8B273C71A79469400DA9EBD /* Business.m in Sources */,
 				B8B273CB1A794E9900DA9EBD /* BusinessCell.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
@@ -411,6 +422,7 @@
 				B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				B8A0B4BE1A7D8115008BB902 /* RestaurantCategoryCell.m in Sources */,
+				B8A0B4CE1A7DA551008BB902 /* DistanceFilter.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				B8A0B4B51A7CC234008BB902 /* RestaurantCategory.m in Sources */,
 				B8A0B4C21A7D8E85008BB902 /* FilterHeaderView.m in Sources */,
