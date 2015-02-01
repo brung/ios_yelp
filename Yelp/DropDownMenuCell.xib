@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
@@ -29,7 +30,9 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="xVq-K9-h6z" secondAttribute="trailing" constant="8" id="0PX-af-i6N"/>
+                    <constraint firstItem="xVq-K9-h6z" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="56B-OX-Rq7"/>
                     <constraint firstItem="xVq-K9-h6z" firstAttribute="leading" secondItem="LeV-vf-k9B" secondAttribute="trailing" constant="8" id="A6r-zm-QvI"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xVq-K9-h6z" secondAttribute="bottom" constant="8" id="IfG-1U-GvE"/>
                     <constraint firstItem="LeV-vf-k9B" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Q54-Zt-8WM"/>
                     <constraint firstAttribute="bottom" secondItem="LeV-vf-k9B" secondAttribute="bottom" constant="8" id="Qvb-MQ-GEC"/>
                     <constraint firstItem="LeV-vf-k9B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="dyM-4m-Dz3"/>

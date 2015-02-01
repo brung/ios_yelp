@@ -7,18 +7,37 @@
 //
 
 #import "FilterViewController.h"
+#import "FilterHeaderView.h"
+#import "DropDownMenuCell.h"
+#import "MostPopularFilter.h"
+#import "SwitchCell.h"
 #import "RestaurantCategory.h"
 #import "RestaurantCategoryCell.h"
 
-
+static NSInteger const FILTER_TYPE_TOGGLES = 0;
+static NSInteger const FILTER_TYPE_SELECT_ONE = 1;
+static NSInteger const FILTER_TYPE_SELECT_MANY = 2;
+static NSString * const DropDownMenuCellNibName = @"DropDownMenuCell";
+static NSString * const SwitchCellNibName = @"SwitchCell";
 static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell";
 
 
-@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, RestaurantCategoryCellDelegate>
+@interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, RestaurantCategoryCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+// Filters to return back to delegate
 @property (nonatomic, readonly) NSDictionary *filters;
+
+@property (nonatomic, strong) NSArray *tableViewFilters;
+
+// Most Popular Filters
+@property (nonatomic, strong) NSArray *mostPopular;
+@property (nonatomic, strong) NSMutableSet *selectedPopularFilters;
+
+// Restaurant categories
 @property (nonatomic, strong) NSArray *categories;
 @property (nonatomic, strong) NSMutableSet *selectedCategories;
+
+@property (nonatomic, strong) NSMutableSet *sectionExpanded;
 
 @end
 
@@ -28,8 +47,14 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
+        self.selectedPopularFilters = [NSMutableSet set];
         self.selectedCategories = [NSMutableSet set];
+        self.sectionExpanded = [NSMutableSet set];
+        self.mostPopular = [MostPopularFilter getMostPopularFilters];
         self.categories = [RestaurantCategory getRestaurantCategories];
+        
+        self.tableViewFilters = @[@{@"title" : @"Most Popular", @"type" : @(FILTER_TYPE_TOGGLES), @"data" : self.mostPopular},
+                                  @{@"title" : @"Restaurant Categories", @"type" : @(FILTER_TYPE_SELECT_MANY), @"data" : self.categories}];
     }
     
     return self;
@@ -44,6 +69,8 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:RestaurantCategoryCellNibName bundle:nil] forCellReuseIdentifier:RestaurantCategoryCellNibName];
+    [self.tableView registerNib:[UINib nibWithNibName:SwitchCellNibName bundle:nil] forCellReuseIdentifier:SwitchCellNibName];
+    [self.tableView registerNib:[UINib nibWithNibName:DropDownMenuCellNibName bundle:nil] forCellReuseIdentifier:DropDownMenuCellNibName];
 
 }
 
@@ -52,14 +79,46 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     // Dispose of any resources that can be recreated.
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.categories.count;
+#pragma mark - TableView methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.tableViewFilters.count;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    FilterHeaderView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"FilterHeaderView"];
+    if (!header) {
+        header = [[FilterHeaderView alloc] initWithReuseIdentifier:@"FilterHeaderView"];
+    }
+    header.headerLabel.text = self.tableViewFilters[section][@"title"];
+    return header;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSArray *data = self.tableViewFilters[section][@"data"];
+    return data.count;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    RestaurantCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:RestaurantCategoryCellNibName];
-    [self configureCell:cell forRowAtIndexPath:indexPath];
-    return cell;
+    NSDictionary *sectionDict = self.tableViewFilters[indexPath.section];
+    if ([sectionDict[@"title"] isEqualToString:@"Restaurant Categories"]) {
+        RestaurantCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:RestaurantCategoryCellNibName];
+        [self configureCell:cell forRowAtIndexPath:indexPath];
+        return cell;
+    } else if ([sectionDict[@"title"] isEqualToString:@"Most Popular"]) {
+        SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:SwitchCellNibName];
+        NSArray *sectionData = sectionDict[@"data"];
+        MostPopularFilter *data = sectionData[indexPath.row];
+        cell.toggleLabel.text = data.name;
+        cell.delegate = self;
+        cell.on = [self.selectedPopularFilters containsObject:data];
+        return cell;
+    } else {
+        DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
+        cell.dropDownLabel.text = @"";
+        [cell.selectionIcon setImage:[UIImage imageNamed:@"dropdown"]];
+        return cell;
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,7 +131,22 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
 #pragma mark - SwitchCell Delegate Methods
+- (void)switchCell:(SwitchCell *)cell didChangeValue:(BOOL)value {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (value) {
+        [self.selectedPopularFilters addObject:self.mostPopular[indexPath.row]];
+    } else {
+        [self.selectedPopularFilters removeObject:self.mostPopular[indexPath.row]];
+    }
+}
+
+
+#pragma mark - RestaurantCategoryCell Delegate Methods
 - (void)restaurantCategoryCell:(RestaurantCategoryCell *)cell didChangeValue:(BOOL)value {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if (value) {
@@ -94,6 +168,12 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         }
         NSString *categoryFilter = [names componentsJoinedByString:@","];
         [filters setObject:categoryFilter forKey:@"category_filter"];
+    }
+    
+    if (self.selectedPopularFilters.count > 0) {
+        for (MostPopularFilter *mpf in self.selectedPopularFilters) {
+            [filters setObject:@(YES) forKey:mpf.apiKey];
+        }
     }
     NSLog(@"created filters %@", filters);
     return filters;

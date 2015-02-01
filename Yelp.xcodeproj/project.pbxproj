@@ -28,6 +28,8 @@
 		B8A0B4B51A7CC234008BB902 /* RestaurantCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4B41A7CC234008BB902 /* RestaurantCategory.m */; };
 		B8A0B4BE1A7D8115008BB902 /* RestaurantCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */; };
 		B8A0B4BF1A7D8115008BB902 /* RestaurantCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */; };
+		B8A0B4C21A7D8E85008BB902 /* FilterHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */; };
+		B8A0B4C51A7D9877008BB902 /* MostPopularFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */; };
 		B8B273B31A78956200DA9EBD /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273B11A78956200DA9EBD /* FilterViewController.m */; };
 		B8B273B41A78956200DA9EBD /* FilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B273B21A78956200DA9EBD /* FilterViewController.xib */; };
 		B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273BB1A7895EC00DA9EBD /* SwitchCell.m */; };
@@ -79,6 +81,10 @@
 		B8A0B4BB1A7D8115008BB902 /* RestaurantCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantCategoryCell.h; sourceTree = "<group>"; };
 		B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantCategoryCell.m; sourceTree = "<group>"; };
 		B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantCategoryCell.xib; sourceTree = "<group>"; };
+		B8A0B4C01A7D8E85008BB902 /* FilterHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterHeaderView.h; sourceTree = "<group>"; };
+		B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterHeaderView.m; sourceTree = "<group>"; };
+		B8A0B4C31A7D9877008BB902 /* MostPopularFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostPopularFilter.h; sourceTree = "<group>"; };
+		B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MostPopularFilter.m; sourceTree = "<group>"; };
 		B8B273B01A78956200DA9EBD /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		B8B273B11A78956200DA9EBD /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		B8B273B21A78956200DA9EBD /* FilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterViewController.xib; sourceTree = "<group>"; };
@@ -228,9 +234,11 @@
 				B82069931A7BE44E00AAE037 /* DropDownMenuCell.h */,
 				B82069941A7BE44E00AAE037 /* DropDownMenuCell.m */,
 				B82069951A7BE44E00AAE037 /* DropDownMenuCell.xib */,
-				B8A0B4BB1A7D8115008BB902 /* RestaurantCategoryCell.h */,
 				B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */,
+				B8A0B4BB1A7D8115008BB902 /* RestaurantCategoryCell.h */,
 				B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */,
+				B8A0B4C01A7D8E85008BB902 /* FilterHeaderView.h */,
+				B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -242,6 +250,8 @@
 				B8B273C61A79469400DA9EBD /* Business.m */,
 				B8A0B4B31A7CC234008BB902 /* RestaurantCategory.h */,
 				B8A0B4B41A7CC234008BB902 /* RestaurantCategory.m */,
+				B8A0B4C31A7D9877008BB902 /* MostPopularFilter.h */,
+				B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -396,12 +406,14 @@
 				B8B273CB1A794E9900DA9EBD /* BusinessCell.m in Sources */,
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				B82069961A7BE44E00AAE037 /* DropDownMenuCell.m in Sources */,
+				B8A0B4C51A7D9877008BB902 /* MostPopularFilter.m in Sources */,
 				B8B273B31A78956200DA9EBD /* FilterViewController.m in Sources */,
 				B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */,
 				420474F618DC299500E88E07 /* YelpClient.m in Sources */,
 				B8A0B4BE1A7D8115008BB902 /* RestaurantCategoryCell.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				B8A0B4B51A7CC234008BB902 /* RestaurantCategory.m in Sources */,
+				B8A0B4C21A7D8E85008BB902 /* FilterHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,8 +15,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjq-Yr-byT">
-                        <rect key="frame" x="8" y="11" width="247" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="8" y="13" width="247" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -43,6 +43,7 @@
                     <constraint firstItem="yjq-Yr-byT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="uyS-zt-1oc"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <connections>
                 <outlet property="toggleLabel" destination="yjq-Yr-byT" id="sMX-dP-jg7"/>
                 <outlet property="toggleSwitch" destination="Fq8-i3-D7e" id="aI1-GB-Ka8"/>
