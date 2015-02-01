@@ -78,7 +78,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Apply" style:UIBarButtonItemStylePlain target:self action:@selector(onApplyButton)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self action:@selector(onSearchButton)];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -108,6 +108,10 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if ([self.tableViewFilters[section][@"type"] integerValue] == FILTER_TYPE_SELECT_ONE &&
+        ![self.sectionExpanded containsObject:@(section)]) {
+        return 1;
+    }
     NSArray *data = self.tableViewFilters[section][@"data"];
     return data.count;
 }
@@ -130,18 +134,30 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     } else if ([sectionDict[@"title"] isEqualToString:@"Distance"]) {
         DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
         NSArray *sectionData = sectionDict[@"data"];
-        DistanceFilter *data = sectionData[indexPath.row];
-        cell.dropDownLabel.text = data.name;
-        NSString *iconString = (self.selectedDistance == indexPath.row) ? @"Checkbox_selected" : @"Checkbox";
-        [cell.selectionIcon setImage:[UIImage imageNamed:iconString]];
+        if ([self.sectionExpanded containsObject:@(indexPath.section)]) {
+            DistanceFilter *data = sectionData[indexPath.row];
+            cell.dropDownLabel.text = data.name;
+            NSString *iconString = (self.selectedDistance == indexPath.row) ? @"Checkbox_selected" : @"Checkbox";
+            [cell.selectionIcon setImage:[UIImage imageNamed:iconString]];
+        } else {
+            DistanceFilter *data = sectionData[self.selectedDistance];
+            cell.dropDownLabel.text = data.name;
+            [cell.selectionIcon setImage:[UIImage imageNamed:@"dropdown"]];
+        }
         return cell;
     } else if ([sectionDict[@"title"] isEqualToString:@"Sort by"]) {
         DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
         NSArray *sectionData = sectionDict[@"data"];
+        if ([self.sectionExpanded containsObject:@(indexPath.section)]) {
         SortyByFilter *data = sectionData[indexPath.row];
         cell.dropDownLabel.text = data.name;
         NSString *iconString = (self.selectedSortBy == indexPath.row) ? @"Checkbox_selected" : @"Checkbox";
         [cell.selectionIcon setImage:[UIImage imageNamed:iconString]];
+        } else {
+            SortyByFilter *data = sectionData[self.selectedSortBy];
+            cell.dropDownLabel.text = data.name;
+            [cell.selectionIcon setImage:[UIImage imageNamed:@"dropdown"]];
+        }
         return cell;
     } else {
         DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
@@ -164,15 +180,25 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *sectionInfo = self.tableViewFilters[indexPath.section];
     if ([sectionInfo[@"title"] isEqualToString:@"Distance"]) {
-        if (indexPath.row != self.selectedDistance) {
-            self.selectedDistance = indexPath.row;
-            [self.tableView reloadData];
+        if (![self.sectionExpanded containsObject:@(indexPath.section)]) {
+            [self.sectionExpanded addObject:@(indexPath.section)];
+        } else {
+            [self.sectionExpanded removeObject:@(indexPath.section)];
+            if (indexPath.row != self.selectedDistance) {
+                self.selectedDistance = indexPath.row;
+            }
         }
+        [self.tableView reloadData];
     } else if ([sectionInfo[@"title"] isEqualToString:@"Sort by"]) {
-        if (indexPath.row != self.selectedSortBy) {
-            self.selectedSortBy = indexPath.row;
-            [self.tableView reloadData];
+        if (![self.sectionExpanded containsObject:@(indexPath.section)]) {
+            [self.sectionExpanded addObject:@(indexPath.section)];
+        } else {
+            [self.sectionExpanded removeObject:@(indexPath.section)];
+            if (indexPath.row != self.selectedSortBy) {
+                self.selectedSortBy = indexPath.row;
+             }
         }
+        [self.tableView reloadData];
     }
 }
 
@@ -201,7 +227,6 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 
 - (NSDictionary *) filters {
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
-    NSLog(@"Setting filters");
     if (self.selectedCategories.count > 0) {
         NSMutableArray *names = [NSMutableArray array];
         for (RestaurantCategory *category in self.selectedCategories) {
@@ -226,8 +251,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         SortyByFilter *sortByFilter = self.sortByOptions[self.selectedSortBy];
         [filters setObject:sortByFilter.code forKey:@"sort"];
     }
-    
-    NSLog(@"created filters %@", filters);
+
     return filters;
 }
 
@@ -235,7 +259,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)onApplyButton {
+- (void)onSearchButton {
     [self.delegate filtersViewController:self didChangeFilters:self.filters];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

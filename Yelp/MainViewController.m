@@ -23,14 +23,15 @@ static NSInteger const ResultCount = 20;
 
 @interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate, UISearchBarDelegate>
 @property (nonatomic, strong) BusinessCell *prototypeCell;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
 @property (nonatomic, strong) NSDictionary *filters;
 @property (nonatomic, strong) NSString *currentSearch;
+@property (nonatomic) NSInteger totalResults;
 @property (nonatomic) BOOL isUpdating;
-@property (nonatomic) BOOL isPaginating;
-@property (nonatomic) NSInteger pagination;
+@property (nonatomic) NSInteger currentPage;
 
 - (void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params;
 
@@ -49,8 +50,7 @@ static NSInteger const ResultCount = 20;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.isUpdating = NO;
-        self.isPaginating = NO;
-        self.pagination = 0;
+        self.currentPage = 0;
         self.currentSearch = DefaultSearch;
         self.filters = [NSDictionary dictionary];
         
@@ -77,6 +77,8 @@ static NSInteger const ResultCount = 20;
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.errorMessageLabel.text = @"Sorry, no matches were found. Try broadening your search.";
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView registerNib:[UINib nibWithNibName:BusinessCellIdentifier bundle:nil] forCellReuseIdentifier:BusinessCellIdentifier];
@@ -104,8 +106,6 @@ static NSInteger const ResultCount = 20;
 - (void)filtersViewController:(FilterViewController *)filtersViewControlller didChangeFilters:(NSDictionary *)filters {
     self.filters = filters;
     [self fetchDataForNewSearch];
-    NSLog(@"hit apply button %@", filters);
-    
 }
 
 #pragma mark - Table view methods
@@ -115,7 +115,12 @@ static NSInteger const ResultCount = 20;
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == self.businesses.count -1) {
-        [self fetchDataForNewPage];
+        if (self.totalResults > self.businesses.count) {
+            [self fetchDataForNewPage];
+            tableView.tableFooterView.hidden = NO;
+        } else {
+            tableView.tableFooterView.hidden = YES;
+        }
     }
     BusinessCell *cell = [tableView dequeueReusableCellWithIdentifier:BusinessCellIdentifier];
     [self configureCell:cell forRowAtIndexPath:indexPath];
@@ -155,10 +160,9 @@ static NSInteger const ResultCount = 20;
 - (void)fetchDataForNewPage {
     if (!self.isUpdating) {
         self.isUpdating = YES;
-        self.isPaginating = YES;
-        self.pagination += 1;
+        self.currentPage += 1;
         NSMutableDictionary *dict = [self.filters mutableCopy];
-        NSInteger offset = self.pagination * ResultCount;
+        NSInteger offset = self.currentPage * ResultCount;
         [dict setObject:@(offset) forKey:@"offset"];
         [self fetchBusinessesWithQuery:self.currentSearch params:dict];
     }
@@ -167,28 +171,36 @@ static NSInteger const ResultCount = 20;
 - (void)fetchDataForNewSearch {
     if (!self.isUpdating) {
         self.isUpdating = YES;
-        self.isPaginating = NO;
-        self.pagination = 0;
+        self.currentPage = 0;
         [self fetchBusinessesWithQuery:self.currentSearch params:self.filters];
     }
 }
 
 - (void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params {
     [self.client searchWithTerm:query params:params success:^(AFHTTPRequestOperation *operation, id response) {
+        self.totalResults = [response[@"total"] integerValue];
+        if (self.totalResults == 0 && self.currentPage == 0) {
+            self.tableView.hidden = YES;
+            self.errorMessageLabel.hidden = NO;
+        } else {
+            self.tableView.hidden = NO;
+            self.errorMessageLabel.hidden = YES;
+        }
+        
         NSArray *businessDictionaries = response[@"businesses"];
-        if (self.isPaginating) {
-            self.isPaginating = NO;
+        if (self.currentPage > 0) {
             NSMutableArray *dict = [self.businesses mutableCopy];
             [dict addObjectsFromArray:[Business businessesWithDictionaries:businessDictionaries]];
             self.businesses = dict;
         } else {
+            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
             self.businesses = [Business businessesWithDictionaries:businessDictionaries];
         }
+        
         [self.tableView reloadData];
         self.isUpdating = NO;
-        //NSLog(@"response: %@", response);
+        NSLog(@"response: %@", response);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.isPaginating = NO;
         self.isUpdating = NO;
         NSLog(@"error: %@", [error description]);
     }];

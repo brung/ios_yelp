@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="errorMessageLabel" destination="44H-VP-QAJ" id="rCb-Xq-VSk"/>
                 <outlet property="tableView" destination="J9x-GS-nvH" id="D3A-jN-e9c"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -20,13 +21,25 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Error message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44H-VP-QAJ">
+                    <rect key="frame" x="104.5" y="274" width="111.5" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="J9x-GS-nvH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="89N-fA-UcR"/>
+                <constraint firstItem="44H-VP-QAJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="E0S-56-Div"/>
                 <constraint firstAttribute="trailing" secondItem="J9x-GS-nvH" secondAttribute="trailing" id="GF6-ex-Iev"/>
+                <constraint firstAttribute="centerX" secondItem="44H-VP-QAJ" secondAttribute="centerX" id="HsV-wd-WIK"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="44H-VP-QAJ" secondAttribute="bottom" constant="8" id="SBR-kW-Dga"/>
+                <constraint firstAttribute="centerY" secondItem="44H-VP-QAJ" secondAttribute="centerY" id="SsH-Cz-jkP"/>
                 <constraint firstAttribute="bottom" secondItem="J9x-GS-nvH" secondAttribute="bottom" id="nrY-94-wG7"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="44H-VP-QAJ" secondAttribute="trailing" constant="8" id="tzQ-a7-Nvt"/>
                 <constraint firstItem="J9x-GS-nvH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vP6-mY-s4g"/>
+                <constraint firstItem="44H-VP-QAJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="w4b-Wd-wcW"/>
             </constraints>
         </view>
     </objects>
