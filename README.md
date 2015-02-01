@@ -3,7 +3,7 @@ CodePath iOS Intro Class - Week 2 - Yelp
 
 Build a Yelp search app
 
-Time Spent: 14 hours
+Time Spent: 15 hours
 
 Completed user stories:
  * Search Results Page:
@@ -19,7 +19,7 @@ Completed user stories:
    * [x] Required: Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
    * [ ] Optional: implement a custom switch
    * [x] Optional: Radius filter should expand as in the real Yelp app
-   * [ ] Optional: Categories should show a subset of the full list with a "See All" row to expand. Category list is here: http://www.yelp.com/developers/documentation/category_list (Links to an external site.)
+   * [x] Optional: Categories should show a subset of the full list with a "See All" row to expand. Category list is here: http://www.yelp.com/developers/documentation/category_list (Links to an external site.)
  * Restaurant Page:
    * [ ] Optional: Implement the restaurant detail page.
 
