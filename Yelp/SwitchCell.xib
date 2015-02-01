@@ -3,47 +3,64 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SwitchCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="118" id="KGk-i7-Jjw" customClass="SwitchCell">
+            <rect key="frame" x="0.0" y="0.0" width="360" height="118"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyI-iI-tJ3">
-                        <rect key="frame" x="8" y="11" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UsV-pQ-wKK">
-                        <rect key="frame" x="263" y="6" width="51" height="31"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3u6-9N-JgA">
+                        <rect key="frame" x="16" y="0.0" width="328" height="117.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyI-iI-tJ3">
+                                <rect key="frame" x="8" y="51" width="255" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UsV-pQ-wKK">
+                                <rect key="frame" x="271" y="44" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="CG3-xc-jaG"/>
+                                    <constraint firstAttribute="width" constant="49" id="ik2-A1-7A6"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="vvY-eZ-XRy"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="31" id="CG3-xc-jaG"/>
-                            <constraint firstAttribute="width" constant="49" id="ik2-A1-7A6"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jyI-iI-tJ3" secondAttribute="bottom" constant="8" id="5yN-7F-XVR"/>
+                            <constraint firstItem="jyI-iI-tJ3" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3u6-9N-JgA" secondAttribute="top" constant="8" id="MEQ-yT-ELs"/>
+                            <constraint firstItem="UsV-pQ-wKK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3u6-9N-JgA" secondAttribute="top" constant="8" id="MTO-fZ-4Tk"/>
+                            <constraint firstAttribute="centerY" secondItem="UsV-pQ-wKK" secondAttribute="centerY" id="Xjr-8T-RDv"/>
+                            <constraint firstAttribute="centerY" secondItem="jyI-iI-tJ3" secondAttribute="centerY" id="ayY-M0-VEC"/>
+                            <constraint firstItem="UsV-pQ-wKK" firstAttribute="leading" secondItem="jyI-iI-tJ3" secondAttribute="trailing" constant="8" id="fEd-ik-Qxq"/>
+                            <constraint firstAttribute="trailing" secondItem="UsV-pQ-wKK" secondAttribute="trailing" constant="8" id="fLa-IS-qPT"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UsV-pQ-wKK" secondAttribute="bottom" constant="8" id="rEx-X1-S5c"/>
+                            <constraint firstItem="jyI-iI-tJ3" firstAttribute="leading" secondItem="3u6-9N-JgA" secondAttribute="leading" constant="8" id="rhR-ac-Do4"/>
                         </constraints>
-                        <connections>
-                            <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="vvY-eZ-XRy"/>
-                        </connections>
-                    </switch>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="centerY" secondItem="jyI-iI-tJ3" secondAttribute="centerY" id="CS1-md-rY9"/>
-                    <constraint firstAttribute="trailing" secondItem="UsV-pQ-wKK" secondAttribute="trailing" constant="8" id="SwG-jj-C4s"/>
-                    <constraint firstAttribute="centerY" secondItem="UsV-pQ-wKK" secondAttribute="centerY" id="iC7-tm-kuQ"/>
-                    <constraint firstItem="jyI-iI-tJ3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="qzz-cd-FSb"/>
+                    <constraint firstAttribute="bottom" secondItem="3u6-9N-JgA" secondAttribute="bottom" id="Rn5-mR-EQE"/>
+                    <constraint firstItem="3u6-9N-JgA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="enG-Iw-7Kp"/>
+                    <constraint firstItem="3u6-9N-JgA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="hXO-lc-6TS"/>
+                    <constraint firstAttribute="trailing" secondItem="3u6-9N-JgA" secondAttribute="trailing" constant="16" id="ish-Fy-Zkg"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <connections>
                 <outlet property="toggleLabel" destination="jyI-iI-tJ3" id="udg-zX-waL"/>
                 <outlet property="toggleSwitch" destination="UsV-pQ-wKK" id="yAS-Dg-lQ6"/>
             </connections>
-            <point key="canvasLocation" x="369" y="337"/>
+            <point key="canvasLocation" x="331" y="255"/>
         </tableViewCell>
     </objects>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

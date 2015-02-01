@@ -199,7 +199,7 @@ static NSInteger const ResultCount = 20;
         
         [self.tableView reloadData];
         self.isUpdating = NO;
-        NSLog(@"response: %@", response);
+        //NSLog(@"response: %@", response);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.isUpdating = NO;
         NSLog(@"error: %@", [error description]);

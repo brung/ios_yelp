@@ -28,7 +28,6 @@
 		B8A0B4B51A7CC234008BB902 /* RestaurantCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4B41A7CC234008BB902 /* RestaurantCategory.m */; };
 		B8A0B4BE1A7D8115008BB902 /* RestaurantCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */; };
 		B8A0B4BF1A7D8115008BB902 /* RestaurantCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */; };
-		B8A0B4C21A7D8E85008BB902 /* FilterHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */; };
 		B8A0B4C51A7D9877008BB902 /* MostPopularFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */; };
 		B8A0B4CB1A7DA543008BB902 /* SortyByFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4CA1A7DA543008BB902 /* SortyByFilter.m */; };
 		B8A0B4CE1A7DA551008BB902 /* DistanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A0B4CD1A7DA551008BB902 /* DistanceFilter.m */; };
@@ -83,8 +82,6 @@
 		B8A0B4BB1A7D8115008BB902 /* RestaurantCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestaurantCategoryCell.h; sourceTree = "<group>"; };
 		B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantCategoryCell.m; sourceTree = "<group>"; };
 		B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RestaurantCategoryCell.xib; sourceTree = "<group>"; };
-		B8A0B4C01A7D8E85008BB902 /* FilterHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterHeaderView.h; sourceTree = "<group>"; };
-		B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterHeaderView.m; sourceTree = "<group>"; };
 		B8A0B4C31A7D9877008BB902 /* MostPopularFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostPopularFilter.h; sourceTree = "<group>"; };
 		B8A0B4C41A7D9877008BB902 /* MostPopularFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MostPopularFilter.m; sourceTree = "<group>"; };
 		B8A0B4C91A7DA543008BB902 /* SortyByFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortyByFilter.h; sourceTree = "<group>"; };
@@ -243,8 +240,6 @@
 				B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */,
 				B8A0B4BB1A7D8115008BB902 /* RestaurantCategoryCell.h */,
 				B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */,
-				B8A0B4C01A7D8E85008BB902 /* FilterHeaderView.h */,
-				B8A0B4C11A7D8E85008BB902 /* FilterHeaderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -425,7 +420,6 @@
 				B8A0B4CE1A7DA551008BB902 /* DistanceFilter.m in Sources */,
 				420474FB18DC2B2100E88E07 /* MainViewController.m in Sources */,
 				B8A0B4B51A7CC234008BB902 /* RestaurantCategory.m in Sources */,
-				B8A0B4C21A7D8E85008BB902 /* FilterHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

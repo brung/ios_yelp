@@ -7,7 +7,6 @@
 //
 
 #import "FilterViewController.h"
-#import "FilterHeaderView.h"
 #import "DropDownMenuCell.h"
 #import "MostPopularFilter.h"
 #import "DistanceFilter.h"
@@ -98,13 +97,8 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     return self.tableViewFilters.count;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    FilterHeaderView *header = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"FilterHeaderView"];
-    if (!header) {
-        header = [[FilterHeaderView alloc] initWithReuseIdentifier:@"FilterHeaderView"];
-    }
-    header.headerLabel.text = self.tableViewFilters[section][@"title"];
-    return header;
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return self.tableViewFilters[section][@"title"];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

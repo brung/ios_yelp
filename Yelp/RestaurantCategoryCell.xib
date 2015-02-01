@@ -7,40 +7,74 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RestaurantCategoryCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="95" id="KGk-i7-Jjw" customClass="RestaurantCategoryCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjq-Yr-byT">
-                        <rect key="frame" x="8" y="13" width="247" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fq8-i3-D7e">
-                        <rect key="frame" x="263" y="6" width="51" height="31"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olt-DQ-STj">
+                        <rect key="frame" x="16" y="0.0" width="288" height="94.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjq-Yr-byT">
+                                <rect key="frame" x="8" y="40" width="215" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fq8-i3-D7e">
+                                <rect key="frame" x="231" y="32" width="51" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="8c8-MM-hOk"/>
+                                    <constraint firstAttribute="width" constant="49" id="KZ7-ZJ-yMX"/>
+                                    <constraint firstAttribute="height" constant="31" id="ioR-Ah-hRB"/>
+                                    <constraint firstAttribute="height" constant="31" id="uCx-Ee-xrD"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="8c8-MM-hOk"/>
+                                        <exclude reference="ioR-Ah-hRB"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="04J-ER-ndC"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="49" id="8c8-MM-hOk"/>
-                            <constraint firstAttribute="height" constant="31" id="ioR-Ah-hRB"/>
+                            <constraint firstItem="Fq8-i3-D7e" firstAttribute="top" relation="greaterThanOrEqual" secondItem="olt-DQ-STj" secondAttribute="top" constant="8" id="81g-d2-jQG"/>
+                            <constraint firstAttribute="centerY" secondItem="yjq-Yr-byT" secondAttribute="centerY" id="GtS-ZW-DEP"/>
+                            <constraint firstItem="yjq-Yr-byT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="olt-DQ-STj" secondAttribute="top" constant="8" id="JUT-9r-mF5"/>
+                            <constraint firstAttribute="trailing" secondItem="Fq8-i3-D7e" secondAttribute="trailing" constant="8" id="Mlf-Zr-che"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yjq-Yr-byT" secondAttribute="bottom" constant="8" id="TE5-Wx-xC7"/>
+                            <constraint firstAttribute="centerY" secondItem="Fq8-i3-D7e" secondAttribute="centerY" id="Zec-0S-uum"/>
+                            <constraint firstAttribute="trailing" secondItem="Fq8-i3-D7e" secondAttribute="trailing" constant="8" id="aKN-Hd-2j3"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fq8-i3-D7e" secondAttribute="bottom" constant="8" id="fPr-AH-4b9"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fq8-i3-D7e" secondAttribute="bottom" constant="8" id="gtN-Oc-4I7"/>
+                            <constraint firstItem="yjq-Yr-byT" firstAttribute="leading" secondItem="olt-DQ-STj" secondAttribute="leading" constant="8" id="mrs-P3-AJw"/>
+                            <constraint firstItem="Fq8-i3-D7e" firstAttribute="top" relation="greaterThanOrEqual" secondItem="olt-DQ-STj" secondAttribute="top" constant="8" id="nGa-K7-hO7"/>
+                            <constraint firstItem="Fq8-i3-D7e" firstAttribute="leading" secondItem="yjq-Yr-byT" secondAttribute="trailing" constant="8" id="nGi-vO-PWJ"/>
+                            <constraint firstItem="Fq8-i3-D7e" firstAttribute="leading" secondItem="yjq-Yr-byT" secondAttribute="trailing" constant="8" id="tmp-a0-V9U"/>
+                            <constraint firstAttribute="centerY" secondItem="Fq8-i3-D7e" secondAttribute="centerY" id="zng-Dw-EoQ"/>
                         </constraints>
-                        <connections>
-                            <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="04J-ER-ndC"/>
-                        </connections>
-                    </switch>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="aKN-Hd-2j3"/>
+                                <exclude reference="fPr-AH-4b9"/>
+                                <exclude reference="nGa-K7-hO7"/>
+                                <exclude reference="nGi-vO-PWJ"/>
+                                <exclude reference="zng-Dw-EoQ"/>
+                            </mask>
+                        </variation>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="Fq8-i3-D7e" secondAttribute="trailing" constant="8" id="2UL-U2-ITQ"/>
-                    <constraint firstAttribute="centerY" secondItem="Fq8-i3-D7e" secondAttribute="centerY" id="6L1-5Y-55a"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yjq-Yr-byT" secondAttribute="bottom" constant="8" id="FR2-C3-kIe"/>
-                    <constraint firstAttribute="centerY" secondItem="yjq-Yr-byT" secondAttribute="centerY" id="GYZ-Gc-OYm"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fq8-i3-D7e" secondAttribute="bottom" constant="4" id="HvF-a8-qWu"/>
-                    <constraint firstItem="yjq-Yr-byT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Zq5-Yh-eb0"/>
-                    <constraint firstItem="Fq8-i3-D7e" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="c8i-rO-5gB"/>
-                    <constraint firstItem="Fq8-i3-D7e" firstAttribute="leading" secondItem="yjq-Yr-byT" secondAttribute="trailing" constant="8" id="rMK-FV-Zhf"/>
-                    <constraint firstItem="yjq-Yr-byT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="uyS-zt-1oc"/>
+                    <constraint firstAttribute="bottom" secondItem="olt-DQ-STj" secondAttribute="bottom" id="8rg-xm-FA3"/>
+                    <constraint firstItem="olt-DQ-STj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Ki6-Yq-WhM"/>
+                    <constraint firstItem="olt-DQ-STj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="LxC-cF-SQ5"/>
+                    <constraint firstAttribute="trailing" secondItem="olt-DQ-STj" secondAttribute="trailing" constant="16" id="dVK-4z-WpV"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -48,6 +82,7 @@
                 <outlet property="toggleLabel" destination="yjq-Yr-byT" id="sMX-dP-jg7"/>
                 <outlet property="toggleSwitch" destination="Fq8-i3-D7e" id="aI1-GB-Ka8"/>
             </connections>
+            <point key="canvasLocation" x="139" y="179.5"/>
         </tableViewCell>
     </objects>
 </document>
