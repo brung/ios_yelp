@@ -205,22 +205,28 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
             [self.sectionExpanded addObject:@(indexPath.section)];
             [self animateExpandSection:indexPath.section fromOldRows:1 toNewRows:((NSArray *)sectionInfo[@"data"]).count];
         } else {
-            [self.sectionExpanded removeObject:@(indexPath.section)];
             if (indexPath.row != self.selectedDistance) {
+                NSInteger oldSelection = self.selectedDistance;
                 self.selectedDistance = indexPath.row;
+                [self animateUpdateOldSelection:oldSelection toIndexPath:indexPath andCollapseFromRowCount:((NSArray *)sectionInfo[@"data"]).count];
+            } else {
+                [self.sectionExpanded removeObject:@(indexPath.section)];
+                [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count toNewRows:1];
             }
-            [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count toNewRows:1];
         }
     } else if ([sectionInfo[@"title"] isEqualToString:@"Sort by"]) {
         if (![self.sectionExpanded containsObject:@(indexPath.section)]) {
             [self.sectionExpanded addObject:@(indexPath.section)];
             [self animateExpandSection:indexPath.section fromOldRows:1 toNewRows:((NSArray *)sectionInfo[@"data"]).count];
         } else {
-            [self.sectionExpanded removeObject:@(indexPath.section)];
+            NSInteger oldSelection = self.selectedSortBy;
             if (indexPath.row != self.selectedSortBy) {
                 self.selectedSortBy = indexPath.row;
+                [self animateUpdateOldSelection:oldSelection toIndexPath:indexPath andCollapseFromRowCount:((NSArray *)sectionInfo[@"data"]).count];
+            } else {
+                [self.sectionExpanded removeObject:@(indexPath.section)];
+                [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count toNewRows:1];
             }
-            [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count toNewRows:1];
         }
     } else if ([sectionInfo[@"title"]isEqualToString:@"Restaurant Categories"]) {
         if (![self.sectionExpanded containsObject:@(indexPath.section)] &&
@@ -249,7 +255,22 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView endUpdates];
     }];
+}
 
+- (void)animateUpdateOldSelection:(NSInteger)oldSelection toIndexPath:(NSIndexPath*)indexPath andCollapseFromRowCount:(NSInteger)oldRows {
+    NSMutableArray *updateIndexPaths = [NSMutableArray array];
+    [updateIndexPaths addObject:[NSIndexPath indexPathForRow:oldSelection inSection:indexPath.section]];
+    [updateIndexPaths addObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]];
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionTransitionNone animations:^{
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:updateIndexPaths withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
+    } completion:^(BOOL finished) {
+        [self.sectionExpanded removeObject:@(indexPath.section)];
+        [self animateExpandSection:indexPath.section fromOldRows:oldRows toNewRows:1];
+
+    }];
+    
 }
 
 #pragma mark - SwitchCell Delegate Methods
@@ -278,6 +299,11 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
             }];
         }
     }
+}
+
+#pragma mark -DropDownMenuCell Delegate Methods
+- (void)onTapDropDownCell:(DropDownMenuCell *)cell {
+    
 }
 
 #pragma mark - Private Methods
