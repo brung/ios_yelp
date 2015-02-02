@@ -61,7 +61,7 @@ static NSInteger const ResultCount = 20;
         
         UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
         filterButton.tintColor = [UIColor whiteColor];
-        filterButton.style = UIBarButtonItemStyleBordered;
+;
         self.navigationItem.leftBarButtonItem = filterButton;
         
         float leftButtonWidth = CGRectGetWidth(self.navigationItem.titleView.frame);

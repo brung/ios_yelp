@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -14,15 +14,15 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J9x-GS-nvH">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Error message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44H-VP-QAJ">
-                    <rect key="frame" x="104.5" y="274" width="111.5" height="20.5"/>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Error message" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44H-VP-QAJ">
+                    <rect key="frame" x="8" y="8" width="584" height="584"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -31,21 +31,15 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="J9x-GS-nvH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="89N-fA-UcR"/>
-                <constraint firstItem="44H-VP-QAJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="E0S-56-Div"/>
+                <constraint firstItem="44H-VP-QAJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="E0S-56-Div"/>
                 <constraint firstAttribute="trailing" secondItem="J9x-GS-nvH" secondAttribute="trailing" id="GF6-ex-Iev"/>
-                <constraint firstAttribute="centerX" secondItem="44H-VP-QAJ" secondAttribute="centerX" id="HsV-wd-WIK"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="44H-VP-QAJ" secondAttribute="bottom" constant="8" id="SBR-kW-Dga"/>
-                <constraint firstAttribute="centerY" secondItem="44H-VP-QAJ" secondAttribute="centerY" id="SsH-Cz-jkP"/>
+                <constraint firstAttribute="bottom" secondItem="44H-VP-QAJ" secondAttribute="bottom" constant="8" id="SBR-kW-Dga"/>
                 <constraint firstAttribute="bottom" secondItem="J9x-GS-nvH" secondAttribute="bottom" id="nrY-94-wG7"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="44H-VP-QAJ" secondAttribute="trailing" constant="8" id="tzQ-a7-Nvt"/>
+                <constraint firstAttribute="trailing" secondItem="44H-VP-QAJ" secondAttribute="trailing" constant="8" id="tzQ-a7-Nvt"/>
                 <constraint firstItem="J9x-GS-nvH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vP6-mY-s4g"/>
-                <constraint firstItem="44H-VP-QAJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="w4b-Wd-wcW"/>
+                <constraint firstItem="44H-VP-QAJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="w4b-Wd-wcW"/>
             </constraints>
+            <point key="canvasLocation" x="140" y="155"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
