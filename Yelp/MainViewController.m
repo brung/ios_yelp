@@ -5,26 +5,29 @@
 //  Created by Timothy Lee on 3/21/14.
 //  Copyright (c) 2014 codepath. All rights reserved.
 //
-
 #import "UIImageView+AFNetworking.h"
 #import "MainViewController.h"
 #import "YelpClient.h"
 #import "FilterViewController.h"
 #import "BusinessCell.h"
 #import "Business.h"
+#import "MapKit/MapKit.h"
 
 NSString * const kYelpConsumerKey = @"fgQ4OCxPj2MPVBMMMBuG7Q";
 NSString * const kYelpConsumerSecret = @"uw3QzsyZAzcRYfMNensCcn8Vb0M";
 NSString * const kYelpToken = @"DHP8ygCpJVrgYz6M2tzIilJbKNQYWJex";
 NSString * const kYelpTokenSecret = @"Gaj-qGTtbkhpoJRUbjHQm6RTFoA";
+static NSInteger const ListView = 0;
+static NSInteger const MapView = 1;
 static NSString * const BusinessCellIdentifier = @"BusinessCell";
 static NSString * const DefaultSearch = @"Restaurants";
 static NSInteger const ResultCount = 20;
 
-@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate, UISearchBarDelegate>
+@interface MainViewController () <UITableViewDataSource, UITableViewDelegate, FilterViewControllerDelegate, UISearchBarDelegate, MKMapViewDelegate>
 @property (nonatomic, strong) BusinessCell *prototypeCell;
 @property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
 @property (nonatomic, strong) NSDictionary *filters;
@@ -32,6 +35,7 @@ static NSInteger const ResultCount = 20;
 @property (nonatomic) NSInteger totalResults;
 @property (nonatomic) BOOL isUpdating;
 @property (nonatomic) NSInteger currentPage;
+@property (nonatomic) NSInteger currentView;
 
 - (void)fetchBusinessesWithQuery:(NSString *)query params:(NSDictionary *)params;
 
@@ -63,9 +67,14 @@ static NSInteger const ResultCount = 20;
         filterButton.tintColor = [UIColor whiteColor];
 ;
         self.navigationItem.leftBarButtonItem = filterButton;
+
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(onRightButton)];
+        filterButton.tintColor = [UIColor whiteColor];
+        ;
+        self.navigationItem.rightBarButtonItem = rightButton;
         
-        float leftButtonWidth = CGRectGetWidth(self.navigationItem.titleView.frame);
-        UISearchBar *sb = [[UISearchBar alloc] initWithFrame:CGRectMake(leftButtonWidth, 0, CGRectGetWidth(self.navigationItem.titleView.frame)-leftButtonWidth, CGRectGetHeight(self.navigationItem.titleView.frame))];
+        //float leftButtonWidth = CGRectGetWidth(self.navigationItem.titleView.frame);
+        UISearchBar *sb = [[UISearchBar alloc] init]; //WithFrame:CGRectMake(leftButtonWidth, 0, CGRectGetWidth(self.navigationItem.titleView.frame)-leftButtonWidth, CGRectGetHeight(self.navigationItem.titleView.frame))];
         sb.delegate = self;
         self.navigationItem.titleView = sb;
         
@@ -88,6 +97,10 @@ static NSInteger const ResultCount = 20;
     loadingView.center = tableFooterView.center;
     [tableFooterView addSubview:loadingView];
     self.tableView.tableFooterView = tableFooterView;
+    
+    self.mapView.delegate = self;
+    CLLocationCoordinate2D test = CLLocationCoordinate2DMake(37.774866,-122.394556);
+    self.mapView.region = MKCoordinateRegionMakeWithDistance(test, 33000, 33000);
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,12 +162,36 @@ static NSInteger const ResultCount = 20;
     }
 }
 
+#pragma mark - MapView methods
+
+
 #pragma mark - Private methods
 - (void) onFilterButton {
     FilterViewController *vc = [[FilterViewController alloc] init];
     vc.delegate = self;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)onRightButton {
+    if (self.currentView == MapView) {
+        self.navigationItem.rightBarButtonItem.title = @"Map";
+        [self.tableView reloadData];
+        [UIView transitionWithView:self.view duration:0.7 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+            self.tableView.hidden = NO;
+            self.mapView.hidden = YES;
+        } completion:^(BOOL finished) {
+        }];
+        self.currentView = ListView;
+    } else {
+        self.navigationItem.rightBarButtonItem.title = @"List";
+        [UIView transitionWithView:self.view duration:0.7 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
+        self.tableView.hidden = YES;
+        self.mapView.hidden = NO;
+        } completion:^(BOOL finished) {
+        }];
+        self.currentView = MapView;
+    }
 }
 
 - (void)fetchDataForNewPage {

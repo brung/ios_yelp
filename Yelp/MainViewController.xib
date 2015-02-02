@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
                 <outlet property="errorMessageLabel" destination="44H-VP-QAJ" id="rCb-Xq-VSk"/>
+                <outlet property="mapView" destination="HOL-I4-Pmt" id="wLb-DX-rxO"/>
                 <outlet property="tableView" destination="J9x-GS-nvH" id="D3A-jN-e9c"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,10 +28,17 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="HOL-I4-Pmt">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </mapView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="HOL-I4-Pmt" secondAttribute="bottom" id="3ss-8f-me9"/>
+                <constraint firstItem="HOL-I4-Pmt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4PG-xd-Ixa"/>
+                <constraint firstItem="HOL-I4-Pmt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="823-Su-2n4"/>
                 <constraint firstItem="J9x-GS-nvH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="89N-fA-UcR"/>
+                <constraint firstAttribute="trailing" secondItem="HOL-I4-Pmt" secondAttribute="trailing" id="8db-51-0k1"/>
                 <constraint firstItem="44H-VP-QAJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="E0S-56-Div"/>
                 <constraint firstAttribute="trailing" secondItem="J9x-GS-nvH" secondAttribute="trailing" id="GF6-ex-Iev"/>
                 <constraint firstAttribute="bottom" secondItem="44H-VP-QAJ" secondAttribute="bottom" constant="8" id="SBR-kW-Dga"/>
