@@ -100,7 +100,7 @@ static NSInteger const ResultCount = 20;
     
     self.mapView.delegate = self;
     CLLocationCoordinate2D test = CLLocationCoordinate2DMake(37.774866,-122.394556);
-    self.mapView.region = MKCoordinateRegionMakeWithDistance(test, 33000, 33000);
+    self.mapView.region = MKCoordinateRegionMakeWithDistance(test, 10000, 10000);
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,6 +163,21 @@ static NSInteger const ResultCount = 20;
 }
 
 #pragma mark - MapView methods
+- (void) showPinsOnMapView {
+    for (int i = 0; i < MIN(20, self.businesses.count); i++) {
+        [self.mapView addAnnotation:[self.businesses[i] asAnnotation]];
+    }
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    MKAnnotationView *mav = [mapView dequeueReusableAnnotationViewWithIdentifier:@"MKPinAnnotationView"];
+    mav.canShowCallout = YES;
+    BusinessAnnotation *busAnno = (BusinessAnnotation *)annotation;
+    UIImageView *ratingsImage;
+    [ratingsImage setImageWithURL:busAnno.rating_img_url];
+    [mav addSubview:ratingsImage];
+    return mav;
+}
 
 
 #pragma mark - Private methods
@@ -185,6 +200,7 @@ static NSInteger const ResultCount = 20;
         self.currentView = ListView;
     } else {
         self.navigationItem.rightBarButtonItem.title = @"List";
+        [self showPinsOnMapView];
         [UIView transitionWithView:self.view duration:0.7 options:UIViewAnimationOptionTransitionFlipFromLeft animations:^{
         self.tableView.hidden = YES;
         self.mapView.hidden = NO;
@@ -236,7 +252,7 @@ static NSInteger const ResultCount = 20;
         
         [self.tableView reloadData];
         self.isUpdating = NO;
-        //NSLog(@"response: %@", response);
+        NSLog(@"response: %@", response);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.isUpdating = NO;
         NSLog(@"error: %@", [error description]);

@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MapKit/MapKit.h"
+#import "BusinessAnnotation.h"
 
 @interface Business : NSObject
 + (NSArray *)businessesWithDictionaries:(NSArray *)businessDictionaries;
+- (BusinessAnnotation *)asAnnotation;
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSArray* categories;

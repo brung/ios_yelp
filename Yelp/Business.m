@@ -38,6 +38,17 @@
     return self;
 }
 
+- (BusinessAnnotation *)asAnnotation {
+    float latitude = [self.coordinate[@"latitude"] floatValue];
+    float longitude = [self.coordinate[@"longitude"] floatValue];
+    BusinessAnnotation *anno = [[BusinessAnnotation alloc] initWithLocation:CLLocationCoordinate2DMake(latitude, longitude)];
+    [anno setIsClosed:self.is_closed];
+    [anno setRating_img_url:self.rating_img_url];
+    [anno setReviewCount:self.review_count];
+    [anno setTitle:self.name];
+    return anno;
+}
+
 + (NSArray *) businessesWithDictionaries:(NSArray *)businessDictionaries {
     NSMutableArray *businesses = [NSMutableArray array];
     for (NSDictionary *businessDict in businessDictionaries) {
