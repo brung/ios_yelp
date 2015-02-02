@@ -69,11 +69,13 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
                                   @{@"title" : @"Sort by", @"type" : @(FILTER_TYPE_SELECT_ONE), @"data" : self.sortByOptions},
                                   @{@"title" : @"Restaurant Categories", @"type" : @(FILTER_TYPE_SELECT_MANY), @"data" : self.categories}];
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [self.selectedCategories addObjectsFromArray:[defaults objectForKey:@"filterCategories"]];
-        [self.selectedPopularFilters addObjectsFromArray:[defaults objectForKey:@"filterPopular"]];
-        self.selectedDistance = [defaults integerForKey:@"filterDistance"];
-        self.selectedSortBy = [defaults integerForKey:@"filterSortby"];
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        NSArray *storedValue = [NSJSONSerialization JSONObjectWithData:[defaults objectForKey:@"filterCategories"] options:0 error:nil];
+//        [self.selectedCategories addObjectsFromArray:storedValue];
+//        storedValue = [NSJSONSerialization JSONObjectWithData:[defaults objectForKey:@"filterPopular"] options:0 error:nil];
+//        [self.selectedPopularFilters addObjectsFromArray:storedValue];
+//        self.selectedDistance = [defaults integerForKey:@"filterDistance"];
+//        self.selectedSortBy = [defaults integerForKey:@"filterSortby"];
     }
     
     return self;
@@ -281,7 +283,6 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 #pragma mark - Private Methods
 
 - (NSDictionary *) filters {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *filters = [NSMutableDictionary dictionary];
     if (self.selectedCategories.count > 0) {
         NSMutableArray *names = [NSMutableArray array];
@@ -290,14 +291,12 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         }
         NSString *categoryFilter = [names componentsJoinedByString:@","];
         [filters setObject:categoryFilter forKey:@"category_filter"];
-        [defaults setObject:self.selectedCategories forKey:@"filterCategories"];
     }
     
     if (self.selectedPopularFilters.count > 0) {
         for (MostPopularFilter *mpf in self.selectedPopularFilters) {
             [filters setObject:@(YES) forKey:mpf.apiKey];
         }
-        [defaults setObject:self.selectedPopularFilters  forKey:@"filterPopular"];
     }
     
     if (self.selectedDistance > 0) {
@@ -310,9 +309,12 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         [filters setObject:sortByFilter.code forKey:@"sort"];
     }
 
-    [defaults setInteger:self.selectedDistance forKey:@"filterDistance"];
-    [defaults setInteger:self.selectedSortBy forKey:@"filterSortBy"];
-    [defaults synchronize];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//   [defaults setObject:[NSJSONSerialization dataWithJSONObject:self.selectedCategories options:0 error:nil] forKey:@"filterCategories"];
+//    [defaults setObject:[NSJSONSerialization dataWithJSONObject:self.selectedPopularFilters options:0 error:nil]  forKey:@"filterPopular"];
+//    [defaults setInteger:self.selectedDistance forKey:@"filterDistance"];
+//    [defaults setInteger:self.selectedSortBy forKey:@"filterSortBy"];
+//    [defaults synchronize];
     
     return filters;
 }
