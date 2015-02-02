@@ -10,7 +10,8 @@
 
 @interface MostPopularFilter : NSObject
 + (NSArray *)getMostPopularFilters;
-
++ (NSArray *)getDictionariesFromFilters:(NSArray *)filters;
++ (NSArray *)getFiltersFromDicitionaries:(NSArray *)dicts;
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* apiKey;

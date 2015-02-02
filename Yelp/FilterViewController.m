@@ -21,6 +21,10 @@ static NSInteger const FILTER_TYPE_SELECT_MANY = 2;
 static NSString * const DropDownMenuCellNibName = @"DropDownMenuCell";
 static NSString * const SwitchCellNibName = @"SwitchCell";
 static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell";
+static NSString * const UserDefaultKeyCategories = @"filterCategories";
+static NSString * const UserDefaultKeyPopular = @"filterPopular";
+static NSString * const UserDefaultKeyDistance = @"filterDistance";
+static NSString * const UserDefaultKeySort = @"filterSort";
 
 
 @interface FilterViewController () <UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, RestaurantCategoryCellDelegate>
@@ -32,7 +36,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 
 // Most Popular Filters
 @property (nonatomic, strong) NSArray *mostPopular;
-@property (nonatomic, strong) NSMutableSet *selectedPopularFilters;
+@property (nonatomic, strong) NSMutableArray *selectedPopularFilters;
 
 // Distance Filters
 @property (nonatomic, strong) NSArray *distanceOptions;
@@ -56,7 +60,10 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
-        self.selectedPopularFilters = [NSMutableSet set];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self action:@selector(onSearchButton)];
+
+        self.selectedPopularFilters = [NSMutableArray array];
         self.selectedCategories = [NSMutableArray array];
         self.sectionExpanded = [NSMutableSet set];
         
@@ -68,24 +75,20 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
                                   @{@"title" : @"Distance", @"type" : @(FILTER_TYPE_SELECT_ONE), @"data" : self.distanceOptions},
                                   @{@"title" : @"Sort by", @"type" : @(FILTER_TYPE_SELECT_ONE), @"data" : self.sortByOptions},
                                   @{@"title" : @"Restaurant Categories", @"type" : @(FILTER_TYPE_SELECT_MANY), @"data" : self.categories}];
-        
-//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//        NSArray *storedValue = [NSJSONSerialization JSONObjectWithData:[defaults objectForKey:@"filterCategories"] options:0 error:nil];
-//        [self.selectedCategories addObjectsFromArray:storedValue];
-//        storedValue = [NSJSONSerialization JSONObjectWithData:[defaults objectForKey:@"filterPopular"] options:0 error:nil];
-//        [self.selectedPopularFilters addObjectsFromArray:storedValue];
-//        self.selectedDistance = [defaults integerForKey:@"filterDistance"];
-//        self.selectedSortBy = [defaults integerForKey:@"filterSortby"];
     }
-    
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancelButton)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self action:@selector(onSearchButton)];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *storedValue = [RestaurantCategory getFiltersFromDicitionaries:[defaults objectForKey:UserDefaultKeyCategories]];
+    [self.selectedCategories addObjectsFromArray:storedValue];
+    storedValue = [MostPopularFilter getFiltersFromDicitionaries:[defaults objectForKey:UserDefaultKeyPopular]];
+    [self.selectedPopularFilters addObjectsFromArray:storedValue];
+    self.selectedDistance = [defaults integerForKey:UserDefaultKeyDistance];
+    self.selectedSortBy = [defaults integerForKey:UserDefaultKeySort];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -266,7 +269,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     } completion:^(BOOL finished) {
         [self.sectionExpanded removeObject:@(indexPath.section)];
         [self animateExpandSection:indexPath.section fromOldRows:oldRows toNewRows:1];
-
+        
     }];
     
 }
@@ -332,13 +335,13 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
         SortyByFilter *sortByFilter = self.sortByOptions[self.selectedSortBy];
         [filters setObject:sortByFilter.code forKey:@"sort"];
     }
-
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//   [defaults setObject:[NSJSONSerialization dataWithJSONObject:self.selectedCategories options:0 error:nil] forKey:@"filterCategories"];
-//    [defaults setObject:[NSJSONSerialization dataWithJSONObject:self.selectedPopularFilters options:0 error:nil]  forKey:@"filterPopular"];
-//    [defaults setInteger:self.selectedDistance forKey:@"filterDistance"];
-//    [defaults setInteger:self.selectedSortBy forKey:@"filterSortBy"];
-//    [defaults synchronize];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[RestaurantCategory getDictionariesFromFilters:self.selectedCategories]forKey:UserDefaultKeyCategories];
+    [defaults setObject:[MostPopularFilter getDictionariesFromFilters:[self.selectedPopularFilters copy]]  forKey:UserDefaultKeyPopular];
+    [defaults setInteger:self.selectedDistance forKey:UserDefaultKeyDistance];
+    [defaults setInteger:self.selectedSortBy forKey:UserDefaultKeySort];
+    [defaults synchronize];
     
     return filters;
 }

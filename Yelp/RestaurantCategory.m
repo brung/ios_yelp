@@ -8,6 +8,7 @@
 
 #import "RestaurantCategory.h"
 
+
 @implementation RestaurantCategory
 
 - (id)initWithDictionary:(NSDictionary *) dictionary {
@@ -17,6 +18,26 @@
         self.code = dictionary[@"code"];
     }
     return self;
+}
+
+- (NSDictionary *)getAsDictionary {
+    return @{@"name" : self.name, @"code" : self.code };
+}
+
++ (NSArray *)getDictionariesFromFilters:(NSArray *)filters {
+    NSMutableArray *results = [NSMutableArray array];
+    for (RestaurantCategory *category in filters) {
+        [results addObject:[category getAsDictionary]];
+    }
+    return results;
+}
+
++ (NSArray *)getFiltersFromDicitionaries:(NSArray *)dicts {
+    NSMutableArray *results = [NSMutableArray array];
+    for (NSDictionary *dict in dicts) {
+        [results addObject:[[RestaurantCategory alloc] initWithDictionary:dict]];
+    }
+    return results;
 }
 
 + (NSArray *) getRestaurantCategories {

@@ -10,6 +10,8 @@
 
 @interface RestaurantCategory : NSObject
 + (NSArray *)getRestaurantCategories;
++ (NSArray *)getDictionariesFromFilters:(NSArray *)filters;
++ (NSArray *)getFiltersFromDicitionaries:(NSArray *)dicts;
 
 
 @property (nonatomic, strong) NSString* name;

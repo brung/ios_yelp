@@ -3,7 +3,7 @@ CodePath iOS Intro Class - Week 2 - Yelp
 
 Build a Yelp search app
 
-Time Spent: 17 hours
+Time Spent: 18 hours
 
 Completed user stories:
  * Search Results Page:
