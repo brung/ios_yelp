@@ -15,10 +15,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3u6-9N-JgA">
-                        <rect key="frame" x="16" y="0.0" width="328" height="117.5"/>
+                        <rect key="frame" x="16" y="0.0" width="328" height="118"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyI-iI-tJ3">
-                                <rect key="frame" x="8" y="51" width="255" height="14.5"/>
+                                <rect key="frame" x="8" y="52" width="255" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -29,6 +29,7 @@
                                     <constraint firstAttribute="height" constant="31" id="CG3-xc-jaG"/>
                                     <constraint firstAttribute="width" constant="49" id="ik2-A1-7A6"/>
                                 </constraints>
+                                <color key="onTintColor" red="0.94700653698979598" green="0.0086661424976810317" blue="0.074840566156775507" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="vvY-eZ-XRy"/>
                                 </connections>

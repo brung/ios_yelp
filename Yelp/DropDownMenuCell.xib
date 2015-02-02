@@ -15,17 +15,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZk-N2-5Sb">
-                        <rect key="frame" x="16" y="0.0" width="470" height="348.5"/>
+                        <rect key="frame" x="16" y="0.0" width="470" height="349"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xVq-K9-h6z">
-                                <rect key="frame" x="430" y="158" width="32" height="32"/>
+                                <rect key="frame" x="438" y="162" width="24" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="T2Q-cV-FAg"/>
-                                    <constraint firstAttribute="width" constant="32" id="dhw-Qv-Lld"/>
+                                    <constraint firstAttribute="height" constant="24" id="T2Q-cV-FAg"/>
+                                    <constraint firstAttribute="width" constant="24" id="dhw-Qv-Lld"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LeV-vf-k9B">
-                                <rect key="frame" x="8" y="167" width="414" height="14.5"/>
+                                <rect key="frame" x="8" y="168" width="422" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>

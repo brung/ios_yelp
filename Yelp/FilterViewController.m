@@ -122,7 +122,8 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *sectionDict = self.tableViewFilters[indexPath.section];
-    NSString *defaultCellLabel = @"See Less";
+    NSString *defaultCellLabel = @"See All";
+    UIImage *defaultCellIcon = [UIImage imageNamed:@"dropdown"];
     if ([sectionDict[@"title"] isEqualToString:@"Restaurant Categories"]) {
         BOOL catExpanded = [self.sectionExpanded containsObject:@(indexPath.section)];
         if ((catExpanded && indexPath.row < self.categories.count) ||
@@ -131,7 +132,10 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
             [self configureCell:cell forRowAtIndexPath:indexPath];
             return cell;
         } else {
-            defaultCellLabel = catExpanded ? @"See Less" : @"See All";
+            if (catExpanded) {
+                defaultCellLabel = @"See Less";
+                defaultCellIcon = [UIImage imageNamed:@"dropdowncollapse"];
+            }
         }
     } else if ([sectionDict[@"title"] isEqualToString:@"Most Popular"]) {
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:SwitchCellNibName];
@@ -170,7 +174,7 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     }
     DropDownMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:DropDownMenuCellNibName];
     cell.dropDownLabel.text = defaultCellLabel;
-    [cell.selectionIcon setImage:[UIImage imageNamed:@"dropdown"]];
+    [cell.selectionIcon setImage:defaultCellIcon];
     return cell;
     
 }
@@ -191,32 +195,53 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     if ([sectionInfo[@"title"] isEqualToString:@"Distance"]) {
         if (![self.sectionExpanded containsObject:@(indexPath.section)]) {
             [self.sectionExpanded addObject:@(indexPath.section)];
+            [self animateExpandSection:indexPath.section fromOldRows:1 toNewRows:((NSArray *)sectionInfo[@"data"]).count];
         } else {
             [self.sectionExpanded removeObject:@(indexPath.section)];
             if (indexPath.row != self.selectedDistance) {
                 self.selectedDistance = indexPath.row;
             }
+            [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count toNewRows:1];
         }
-        [self.tableView reloadData];
     } else if ([sectionInfo[@"title"] isEqualToString:@"Sort by"]) {
         if (![self.sectionExpanded containsObject:@(indexPath.section)]) {
             [self.sectionExpanded addObject:@(indexPath.section)];
+            [self animateExpandSection:indexPath.section fromOldRows:1 toNewRows:((NSArray *)sectionInfo[@"data"]).count];
         } else {
             [self.sectionExpanded removeObject:@(indexPath.section)];
             if (indexPath.row != self.selectedSortBy) {
                 self.selectedSortBy = indexPath.row;
             }
+            [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count toNewRows:1];
         }
-        [self.tableView reloadData];
     } else if ([sectionInfo[@"title"]isEqualToString:@"Restaurant Categories"]) {
         if (![self.sectionExpanded containsObject:@(indexPath.section)] &&
             indexPath.row >= self.selectedCategories.count) {
             [self.sectionExpanded addObject:@(indexPath.section)];
+            [self animateExpandSection:indexPath.section fromOldRows:self.selectedCategories.count+1 toNewRows:((NSArray *)sectionInfo[@"data"]).count+1];
         } else if (indexPath.row >= self.categories.count) {
             [self.sectionExpanded removeObject:@(indexPath.section)];
+            [self animateExpandSection:indexPath.section fromOldRows:((NSArray *)sectionInfo[@"data"]).count+1 toNewRows:self.selectedCategories.count+1];
         }
-        [self.tableView reloadData];
     }
+}
+
+- (void)animateExpandSection:(NSInteger)section fromOldRows:(NSInteger)oldRows toNewRows:(NSInteger)newRows {
+    NSMutableArray *deleteIndexPaths = [NSMutableArray array];
+    NSMutableArray *insertIndexPaths = [NSMutableArray array];
+    for (int i = 0; i < oldRows; i++) {
+        [deleteIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:section]];
+    }
+    for (int i = 0; i < newRows; i++) {
+        [insertIndexPaths addObject:[NSIndexPath indexPathForRow:i inSection:section]];
+    }
+    [UIView animateWithDuration:1 animations:^{
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+    }];
+
 }
 
 #pragma mark - SwitchCell Delegate Methods
@@ -232,11 +257,18 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
 
 #pragma mark - RestaurantCategoryCell Delegate Methods
 - (void)restaurantCategoryCell:(RestaurantCategoryCell *)cell didChangeValue:(BOOL)value {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     if (value) {
-        [self.selectedCategories addObject:self.categories[indexPath.row]];
+        [self.selectedCategories addObject:cell.restaurantCategory];
     } else {
-        [self.selectedCategories removeObject:self.categories[indexPath.row]];
+        [self.selectedCategories removeObject:cell.restaurantCategory];
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        if (![self.sectionExpanded containsObject:@(indexPath.section)]) {
+            [UIView animateWithDuration:1 animations:^{
+                [self.tableView beginUpdates];
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView endUpdates];
+            }];
+        }
     }
 }
 

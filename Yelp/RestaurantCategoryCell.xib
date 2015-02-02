@@ -15,10 +15,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olt-DQ-STj">
-                        <rect key="frame" x="16" y="0.0" width="288" height="94.5"/>
+                        <rect key="frame" x="16" y="0.0" width="288" height="95"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjq-Yr-byT">
-                                <rect key="frame" x="8" y="40" width="215" height="14.5"/>
+                                <rect key="frame" x="8" y="40" width="215" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -31,6 +31,7 @@
                                     <constraint firstAttribute="height" constant="31" id="ioR-Ah-hRB"/>
                                     <constraint firstAttribute="height" constant="31" id="uCx-Ee-xrD"/>
                                 </constraints>
+                                <color key="onTintColor" red="0.94700653700000004" green="0.0086661424980000006" blue="0.074840566159999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="8c8-MM-hOk"/>
