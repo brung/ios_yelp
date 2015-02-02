@@ -89,8 +89,6 @@ static NSString * const RestaurantCategoryCellNibName = @"RestaurantCategoryCell
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    //    self.tableView.separatorInset = UIEdgeInsetsZero;
-    //    [self.tableView setContentOffset:CGPointMake(100,0)];
     [self.tableView registerNib:[UINib nibWithNibName:RestaurantCategoryCellNibName bundle:nil] forCellReuseIdentifier:RestaurantCategoryCellNibName];
     [self.tableView registerNib:[UINib nibWithNibName:SwitchCellNibName bundle:nil] forCellReuseIdentifier:SwitchCellNibName];
     [self.tableView registerNib:[UINib nibWithNibName:DropDownMenuCellNibName bundle:nil] forCellReuseIdentifier:DropDownMenuCellNibName];
