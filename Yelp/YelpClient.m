@@ -28,7 +28,6 @@
     if (params) {
         [allParameters addEntriesFromDictionary:params];
     }
-    NSLog(@"SEarch params %@", allParameters);
     return [self GET:@"search" parameters:allParameters success:success failure:failure];
 }
 

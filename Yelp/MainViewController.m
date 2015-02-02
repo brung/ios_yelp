@@ -112,7 +112,14 @@ static NSInteger const ResultCount = 20;
 #pragma mark - SearchBar delegate methods
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     self.currentSearch = ([searchText length] == 0) ? DefaultSearch : searchText;
-    [self fetchDataForNewSearch];
+    self.currentPage = 0;
+    [self fetchBusinessesWithQuery:self.currentSearch params:self.filters];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.currentSearch = DefaultSearch;
+    self.currentPage = 0;
+    [self fetchBusinessesWithQuery:self.currentSearch params:self.filters];
 }
 
 #pragma mark - Filter delegate methods
@@ -251,18 +258,18 @@ static NSInteger const ResultCount = 20;
         }
         
         NSArray *businessDictionaries = response[@"businesses"];
-        if (self.currentPage > 0) {
+        if (self.currentPage == 0) {
+            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+            self.businesses = [Business businessesWithDictionaries:businessDictionaries];
+        } else {
             NSMutableArray *dict = [self.businesses mutableCopy];
             [dict addObjectsFromArray:[Business businessesWithDictionaries:businessDictionaries]];
             self.businesses = dict;
-        } else {
-            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-            self.businesses = [Business businessesWithDictionaries:businessDictionaries];
         }
         
         [self.tableView reloadData];
         self.isUpdating = NO;
-        NSLog(@"response: %@", response);
+        //NSLog(@"response: %@", response);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.isUpdating = NO;
         NSLog(@"error: %@", [error description]);
