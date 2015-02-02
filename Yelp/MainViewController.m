@@ -12,6 +12,7 @@
 #import "BusinessCell.h"
 #import "Business.h"
 #import "MapKit/MapKit.h"
+#import "BusinessDetailViewController.h"
 
 NSString * const kYelpConsumerKey = @"fgQ4OCxPj2MPVBMMMBuG7Q";
 NSString * const kYelpConsumerSecret = @"uw3QzsyZAzcRYfMNensCcn8Vb0M";
@@ -65,7 +66,6 @@ static NSInteger const ResultCount = 20;
         
         UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(onFilterButton)];
         filterButton.tintColor = [UIColor whiteColor];
-;
         self.navigationItem.leftBarButtonItem = filterButton;
 
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStylePlain target:self action:@selector(onRightButton)];
@@ -160,6 +160,16 @@ static NSInteger const ResultCount = 20;
         businessCell.business = self.businesses[indexPath.row];
         //businessCell.nameLabel.text = [NSString stringWithFormat:@"%ld. %@", indexPath.row+1, business.name];
     }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    BusinessDetailViewController *vc = [[BusinessDetailViewController alloc] init];
+    vc.business = self.businesses[indexPath.row];
+//    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+//    [self presentViewController:nvc animated:YES completion:nil];
+
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - MapView methods

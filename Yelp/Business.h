@@ -23,6 +23,8 @@
 @property (nonatomic) BOOL is_closed;
 @property (nonatomic, strong) NSArray* address;
 @property (nonatomic, strong) NSString* city;
+@property (nonatomic, strong) NSString* postal_code;
+@property (nonatomic, strong) NSString* state_code;
 @property (nonatomic, strong) NSDictionary* coordinate;
 @property (nonatomic, strong) NSString* mobile_url;
 @property (nonatomic, strong) NSArray* neighborhoods;

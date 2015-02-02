@@ -26,6 +26,8 @@
         self.city = [businessDict valueForKeyPath:@"location.city"];
         self.coordinate = [businessDict valueForKeyPath:@"location.coordinate"];
         self.neighborhoods = [businessDict valueForKeyPath:@"location.neighborhoods"];
+        self.postal_code = [businessDict valueForKeyPath:@"location.postal_code"];
+        self.state_code = [businessDict valueForKeyPath:@"location.state_code"];
         self.mobile_url = businessDict[@"mobile_url"];
         self.rating = [businessDict[@"distance"] floatValue];
         self.rating_img_url = [NSURL URLWithString:businessDict[@"rating_img_url"]];

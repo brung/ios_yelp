@@ -40,6 +40,8 @@
 		B8B273C71A79469400DA9EBD /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273C61A79469400DA9EBD /* Business.m */; };
 		B8B273CB1A794E9900DA9EBD /* BusinessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B273C91A794E9900DA9EBD /* BusinessCell.m */; };
 		B8B273CC1A794E9900DA9EBD /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B273CA1A794E9900DA9EBD /* BusinessCell.xib */; };
+		B8B8C13A1A7FE3C800CFE978 /* BusinessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8B8C1381A7FE3C800CFE978 /* BusinessDetailViewController.m */; };
+		B8B8C13B1A7FE3C800CFE978 /* BusinessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B8C1391A7FE3C800CFE978 /* BusinessDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +106,9 @@
 		B8B273C81A794E9900DA9EBD /* BusinessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessCell.h; sourceTree = "<group>"; };
 		B8B273C91A794E9900DA9EBD /* BusinessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessCell.m; sourceTree = "<group>"; };
 		B8B273CA1A794E9900DA9EBD /* BusinessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessCell.xib; sourceTree = "<group>"; };
+		B8B8C1371A7FE3C800CFE978 /* BusinessDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessDetailViewController.h; sourceTree = "<group>"; };
+		B8B8C1381A7FE3C800CFE978 /* BusinessDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessDetailViewController.m; sourceTree = "<group>"; };
+		B8B8C1391A7FE3C800CFE978 /* BusinessDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessDetailViewController.xib; sourceTree = "<group>"; };
 		ED0F843678B6EB9F1272706F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,7 +156,9 @@
 				B8B273B01A78956200DA9EBD /* FilterViewController.h */,
 				B8B273B11A78956200DA9EBD /* FilterViewController.m */,
 				B8B273B21A78956200DA9EBD /* FilterViewController.xib */,
-				B82AA5B61A7B5FA3009A7E5C /* Views */,
+				B8B8C1371A7FE3C800CFE978 /* BusinessDetailViewController.h */,
+				B8B8C1381A7FE3C800CFE978 /* BusinessDetailViewController.m */,
+				B8B8C1391A7FE3C800CFE978 /* BusinessDetailViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -192,12 +199,13 @@
 		42FD6C5018DC286B000BF2B9 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
-				B8B273C41A79466B00DA9EBD /* Models */,
-				420474F318DC297600E88E07 /* API */,
-				420474F718DC2A9200E88E07 /* View Controllers */,
 				42FD6C5918DC286B000BF2B9 /* AppDelegate.h */,
 				42FD6C5A18DC286B000BF2B9 /* AppDelegate.m */,
 				42FD6C5C18DC286B000BF2B9 /* Images.xcassets */,
+				420474F318DC297600E88E07 /* API */,
+				B8B273C41A79466B00DA9EBD /* Models */,
+				420474F718DC2A9200E88E07 /* View Controllers */,
+				B82AA5B61A7B5FA3009A7E5C /* Views */,
 				42FD6C5118DC286B000BF2B9 /* Supporting Files */,
 			);
 			path = Yelp;
@@ -244,8 +252,8 @@
 				B82069931A7BE44E00AAE037 /* DropDownMenuCell.h */,
 				B82069941A7BE44E00AAE037 /* DropDownMenuCell.m */,
 				B82069951A7BE44E00AAE037 /* DropDownMenuCell.xib */,
-				B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */,
 				B8A0B4BB1A7D8115008BB902 /* RestaurantCategoryCell.h */,
+				B8A0B4BC1A7D8115008BB902 /* RestaurantCategoryCell.m */,
 				B8A0B4BD1A7D8115008BB902 /* RestaurantCategoryCell.xib */,
 			);
 			name = Views;
@@ -364,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42FD6C5518DC286B000BF2B9 /* InfoPlist.strings in Resources */,
+				B8B8C13B1A7FE3C800CFE978 /* BusinessDetailViewController.xib in Resources */,
 				420474FC18DC2B2100E88E07 /* MainViewController.xib in Resources */,
 				B8A0B4BF1A7D8115008BB902 /* RestaurantCategoryCell.xib in Resources */,
 				B8B273B41A78956200DA9EBD /* FilterViewController.xib in Resources */,
@@ -429,6 +438,7 @@
 				42FD6C5718DC286B000BF2B9 /* main.m in Sources */,
 				B82069961A7BE44E00AAE037 /* DropDownMenuCell.m in Sources */,
 				B8A0B4C51A7D9877008BB902 /* MostPopularFilter.m in Sources */,
+				B8B8C13A1A7FE3C800CFE978 /* BusinessDetailViewController.m in Sources */,
 				B8AEC3651A7F551600EC77A1 /* BusinessAnnotation.m in Sources */,
 				B8B273B31A78956200DA9EBD /* FilterViewController.m in Sources */,
 				B8B273BD1A7895EC00DA9EBD /* SwitchCell.m in Sources */,
