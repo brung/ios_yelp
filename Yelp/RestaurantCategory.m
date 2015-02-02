@@ -24,6 +24,17 @@
     return @{@"name" : self.name, @"code" : self.code };
 }
 
+- (BOOL)isEqual:(id)object {
+    if ([object isKindOfClass:[RestaurantCategory class]]) {
+        RestaurantCategory *comp = object;
+        if ([self.name isEqualToString:comp.name] &&
+            [self.code isEqualToString:comp.code]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 + (NSArray *)getDictionariesFromFilters:(NSArray *)filters {
     NSMutableArray *results = [NSMutableArray array];
     for (RestaurantCategory *category in filters) {

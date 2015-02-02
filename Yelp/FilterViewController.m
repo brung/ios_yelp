@@ -355,6 +355,20 @@ static NSString * const UserDefaultKeySort = @"filterSort";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)loadUserDefaults {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *storedValue = [RestaurantCategory getFiltersFromDicitionaries:[defaults objectForKey:UserDefaultKeyCategories]];
+    [self.selectedCategories addObjectsFromArray:storedValue];
+    
+    storedValue = [MostPopularFilter getFiltersFromDicitionaries:[defaults objectForKey:UserDefaultKeyPopular]];
+    [self.selectedPopularFilters addObjectsFromArray:storedValue];
+    
+    
+    self.selectedDistance = [defaults integerForKey:UserDefaultKeyDistance];
+    self.selectedSortBy = [defaults integerForKey:UserDefaultKeySort];
+
+}
+
 
 /*
  #pragma mark - Navigation

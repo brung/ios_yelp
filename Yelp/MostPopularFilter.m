@@ -23,6 +23,17 @@
     return @{@"name" : self.name, @"apiKey" : self.apiKey };
 }
 
+- (BOOL)isEqual:(id)object {
+    if ([object isKindOfClass:[MostPopularFilter class]]) {
+        MostPopularFilter *comp = object;
+        if ([self.name isEqualToString:comp.name] &&
+            [self.apiKey isEqualToString:comp.apiKey]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 + (NSArray *)getDictionariesFromFilters:(NSArray *)filters{
     NSMutableArray *results = [NSMutableArray array];
     for (MostPopularFilter *category in filters) {
