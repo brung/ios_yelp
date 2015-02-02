@@ -25,10 +25,6 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UsV-pQ-wKK">
                                 <rect key="frame" x="271" y="44" width="51" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="CG3-xc-jaG"/>
-                                    <constraint firstAttribute="width" constant="49" id="ik2-A1-7A6"/>
-                                </constraints>
                                 <color key="onTintColor" red="0.94700653698979598" green="0.0086661424976810317" blue="0.074840566156775507" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="switchValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="vvY-eZ-XRy"/>

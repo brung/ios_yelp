@@ -35,7 +35,9 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="8c8-MM-hOk"/>
+                                        <exclude reference="KZ7-ZJ-yMX"/>
                                         <exclude reference="ioR-Ah-hRB"/>
+                                        <exclude reference="uCx-Ee-xrD"/>
                                     </mask>
                                 </variation>
                                 <connections>
